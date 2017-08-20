@@ -2,7 +2,7 @@
 
 [HBFav](http://hbfav.bloghackers.net/)のReactNative版です。iOSでのみテストしてます。
 
-<img src="https://i.gyazo.com/da06c8dbba28957cf2d79da227ffbd53.png" style="width: 300px">
+<img src="https://i.gyazo.com/da06c8dbba28957cf2d79da227ffbd53.png" width="300">
 
 # 機能
 
