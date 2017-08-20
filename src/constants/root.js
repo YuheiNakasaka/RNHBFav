@@ -1,0 +1,3 @@
+export const UPDATE_FEED_ITEMS = 'UPDATE_FEED_ITEMS';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_LOADING = 'UPDATE_LOADING';
