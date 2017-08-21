@@ -27,6 +27,11 @@ class Comment extends React.Component {
     });
   }
 
+  validCount(obj) {
+    if (obj === undefined) return 0;
+    return obj.length;
+  }
+
   assignStarsToBookmarkInfo(info) {
     // generate bookmark comment uri
     const query = info.bookmarks.map((bookmark) => {
@@ -37,11 +42,13 @@ class Comment extends React.Component {
     // fetch bookmark stars and asign the star infomartion to each comment info
     getBookmarkStar(query).then((stars) => {
       for (let i = 0; i < info.bookmarks.length; i++) {
-        info.bookmarks[i].stars = stars.entries[i].stars || [];
-        info.bookmarks[i].colored_stars = stars.entries[i].colored_stars || [];
+        info.bookmarks[i].stars = stars.entries[i] ? this.validCount(stars.entries[i].stars) : 0;
+        info.bookmarks[i].colored_stars = stars.entries[i] ? this.validCount(stars.entries[i].colored_stars) : 0;
       }
     }).then(() => {
       this.setState({ entry: info, isLoading: false });
+    }).catch((e) => {
+      console.log(e);
     });
   }
 
@@ -49,9 +56,10 @@ class Comment extends React.Component {
     if (this.state.entry !== null) {
       // fetch top 10 starred bookmarks
       const bookmarks = this.state.entry.bookmarks
-        .filter(bm => (bm.comment !== '' && bm.stars.length + bm.colored_stars.length) > 0)
-        .sort((a, b) => (b.stars.length + b.colored_stars.length) - (a.stars.length + a.colored_stars.length))
+        .filter(bm => bm.comment !== '' && (bm.stars + bm.colored_stars) > 0)
+        .sort((a, b) => (b.stars + b.colored_stars) - (a.stars + a.colored_stars))
         .slice(0, 10);
+
       if (bookmarks.length === 0) return null;
       return (
         <View>

@@ -60,7 +60,7 @@ export function fetchFavorites(userId, offset) {
     },
   };
 
-  const url = `http://b.hatena.ne.jp/${userId}/favorite.rss?of=${offset}`;
+  const url = `http://b.hatena.ne.jp/${userId}/favorite.rss?of=${offset}&with_me=1`;
 
   return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res)).catch((err) => {
     console.log(err.message);

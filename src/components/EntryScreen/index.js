@@ -71,6 +71,7 @@ class Entry extends Component {
     if (link === undefined || link === null) return null;
     return (
       <WebView
+        scalesPageToFit
         ref={(ref) => { this.state.webview = ref; }}
         source={{ uri: link }}
         startInLoadingState={this.state.isLoading}

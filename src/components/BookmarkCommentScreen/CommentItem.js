@@ -22,8 +22,8 @@ class CommentItem extends React.Component {
 
   starComponent() {
     const { stars, colored_stars } = this.state.item;
-    const starCount = stars ? stars.length : 0;
-    const colorStarCount = colored_stars ? colored_stars.length : 0;
+    const starCount = stars || 0;
+    const colorStarCount = colored_stars || 0;
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;
