@@ -55,3 +55,8 @@ iOSのみ利用できます。
 ```
 react-native run-ios
 ```
+
+# 既知のバグ等
+
+- [ReactNativeのWebviewのバグ](https://github.com/YuheiNakasaka/RNHBFav/issues/1)
+  - RCTWebview.mに追記が必要
