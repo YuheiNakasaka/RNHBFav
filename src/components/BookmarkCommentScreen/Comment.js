@@ -41,10 +41,14 @@ class Comment extends React.Component {
 
     // fetch bookmark stars and asign the star infomartion to each comment info
     getBookmarkStar(query).then((stars) => {
-      for (let i = 0; i < info.bookmarks.length; i++) {
-        info.bookmarks[i].stars = stars.entries[i] ? this.validCount(stars.entries[i].stars) : 0;
-        info.bookmarks[i].colored_stars = stars.entries[i] ? this.validCount(stars.entries[i].colored_stars) : 0;
-      }
+      info.bookmarks.map((bookmark, i) => {
+        stars.entries.map((entry) => {
+          if (bookmark.user === entry.name) {
+            info.bookmarks[i].stars = this.validCount(entry.stars);
+            info.bookmarks[i].colored_stars = this.validCount(entry.colored_stars);
+          }
+        });
+      });
     }).then(() => {
       this.setState({ entry: info, isLoading: false });
     }).catch((e) => {

@@ -11,6 +11,12 @@ const eventEmitter = new EventEmitter();
 let results = [];
 function fetchStarReccursively(links, offset, limit) {
   if (offset > links.length) {
+    // set name to entry object to use comments feed.
+    results = results.map((result) => {
+      result.name = result.uri.match(/http:\/\/b\.hatena\.ne\.jp\/(.+)\/.+/)[1];
+      return result;
+    });
+
     eventEmitter.emit('onFinishReccursiveFetch');
     return;
   }
@@ -38,6 +44,7 @@ function fetchStarReccursively(links, offset, limit) {
 
 // get star of bookmark commemt
 export function getBookmarkStar(links) {
+  if (results.length > 0) results = [];
   fetchStarReccursively(links, 0, 50);
   return new Promise((resolve, reject) => {
     try {
