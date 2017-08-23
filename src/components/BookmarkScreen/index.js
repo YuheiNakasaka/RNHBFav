@@ -17,6 +17,7 @@ import {
   Button,
 } from 'native-base';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Share from 'react-native-share';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,7 +34,7 @@ class Bookmark extends React.Component {
 
   headerComponent() {
     return (
-      <Header style={styles.header}>
+      <Header style={styles(this.props.isNightMode).header}>
         <Left>
           <Button
             transparent
@@ -41,11 +42,11 @@ class Bookmark extends React.Component {
               Actions.pop();
             }}
           >
-            <MaterialIcon name="chevron-left" style={styles.headerIcon} />
+            <MaterialIcon name="chevron-left" style={styles(this.props.isNightMode).headerBackIcon} />
           </Button>
         </Left>
         <Body>
-          <Title style={styles.headerTitle}>ブックマーク</Title>
+          <Title style={styles(this.props.isNightMode).headerTitle}>ブックマーク</Title>
         </Body>
         <Right />
       </Header>
@@ -56,13 +57,13 @@ class Bookmark extends React.Component {
     const { creator, userIcon } = this.state.item;
     if (userIcon !== undefined && creator !== undefined) {
       return (
-        <View style={styles.userBar}>
-          <View style={styles.userBarLeft}>
-            <Image style={styles.userIcon} source={{ uri: userIcon }} />
+        <View style={styles(this.props.isNightMode).userBar}>
+          <View style={styles(this.props.isNightMode).userBarLeft}>
+            <Image style={styles(this.props.isNightMode).userIcon} source={{ uri: userIcon }} />
           </View>
-          <View style={styles.userBarRight}>
-            <View style={styles.userBarRightInner}>
-              <Text style={styles.userBarRightInnerText}>{ creator }</Text>
+          <View style={styles(this.props.isNightMode).userBarRight}>
+            <View style={styles(this.props.isNightMode).userBarRightInner}>
+              <Text style={styles(this.props.isNightMode).userBarRightInnerText}>{ creator }</Text>
             </View>
           </View>
         </View>
@@ -75,8 +76,8 @@ class Bookmark extends React.Component {
     const { description } = this.state.item;
     if (description !== '') {
       return (
-        <View style={styles.description}>
-          <Text style={styles.descriptionText}>{ description }</Text>
+        <View style={styles(this.props.isNightMode).description}>
+          <Text style={styles(this.props.isNightMode).descriptionText}>{ description }</Text>
         </View>
       );
     }
@@ -88,7 +89,7 @@ class Bookmark extends React.Component {
     if (title !== undefined) {
       return (
         <View>
-          <Text style={styles.entryTitle}>{ title }</Text>
+          <Text style={styles(this.props.isNightMode).entryTitle}>{ title }</Text>
         </View>
       );
     }
@@ -100,18 +101,18 @@ class Bookmark extends React.Component {
     let entryImageComponent = null;
     if (entryImage !== undefined) {
       entryImageComponent = (
-        <View style={styles.entryRight}>
-          <Image style={styles.entryImage} source={{ uri: entryImage }} />
+        <View style={styles(this.props.isNightMode).entryRight}>
+          <Image style={styles(this.props.isNightMode).entryImage} source={{ uri: entryImage }} />
         </View>
       );
     }
 
     if (entry !== undefined) {
-      const entryLeftStyle = entryImageComponent !== null ? styles.entryLeft : styles.entryLeftNonImg;
+      const entryLeftStyle = entryImageComponent !== null ? styles(this.props.isNightMode).entryLeft : styles(this.props.isNightMode).entryLeftNonImg;
       return (
-        <View style={styles.entryWrap}>
+        <View style={styles(this.props.isNightMode).entryWrap}>
           <View style={entryLeftStyle}>
-            <Text style={styles.entryText}>{ entry }</Text>
+            <Text style={styles(this.props.isNightMode).entryText}>{ entry }</Text>
           </View>
           { entryImageComponent }
         </View>
@@ -124,8 +125,8 @@ class Bookmark extends React.Component {
     const { link } = this.state.item;
     if (link !== '') {
       return (
-        <View style={styles.entryLink}>
-          <Text style={styles.entryLinkText}>{ link }</Text>
+        <View style={styles(this.props.isNightMode).entryLink}>
+          <Text style={styles(this.props.isNightMode).entryLinkText}>{ link }</Text>
         </View>
       );
     }
@@ -136,8 +137,8 @@ class Bookmark extends React.Component {
     const { date } = this.state.item;
     if (date !== '') {
       return (
-        <View style={styles.entryDate}>
-          <Text style={styles.entryDateText}>{ date }</Text>
+        <View style={styles(this.props.isNightMode).entryDate}>
+          <Text style={styles(this.props.isNightMode).entryDateText}>{ date }</Text>
         </View>
       );
     }
@@ -164,14 +165,14 @@ class Bookmark extends React.Component {
     const { bookmarkCount } = this.state.item;
     if (bookmarkCount !== '') {
       return (
-        <View style={styles.bookmarkCount}>
+        <View style={styles(this.props.isNightMode).bookmarkCount}>
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
               Actions.bookmarkComment({ item: this.state.item });
             }}
           >
-            <Text style={styles.bookmarkCountText}>{ bookmarkCount } users</Text>
+            <Text style={styles(this.props.isNightMode).bookmarkCountText}>{ bookmarkCount } users</Text>
           </TouchableOpacity>
         </View>
       );
@@ -181,15 +182,15 @@ class Bookmark extends React.Component {
 
   footerComponent() {
     return (
-      <Footer style={styles.footer}>
-        <View style={styles.footerBookmark}>
+      <Footer style={styles(this.props.isNightMode).footer}>
+        <View style={styles(this.props.isNightMode).footerBookmark}>
           <Button
             transparent
             onPress={() => {
               Actions.bookmarkEdit({ item: this.state.item });
             }}
           >
-            <MaterialIcon name="pencil-box-outline" style={styles.footerBookmarkButtonIcon} />
+            <MaterialIcon name="pencil-box-outline" style={styles(this.props.isNightMode).footerBookmarkButtonIcon} />
           </Button>
         </View>
         <Button
@@ -198,7 +199,7 @@ class Bookmark extends React.Component {
             Share.open({ url: this.state.item.link }).catch((err) => { console.log(err); });
           }}
         >
-          <MaterialIcon name="share-variant" style={styles.footerShareButtonIcon} />
+          <MaterialIcon name="share-variant" style={styles(this.props.isNightMode).footerShareButtonIcon} />
         </Button>
       </Footer>
     );
@@ -208,7 +209,7 @@ class Bookmark extends React.Component {
     return (
       <Container>
         { this.headerComponent() }
-        <Content style={styles.content}>
+        <Content style={styles(this.props.isNightMode).content}>
           { this.userBarComponent() }
           { this.descriptionComponent() }
           { this.entryWrapComponent() }
@@ -221,7 +222,22 @@ class Bookmark extends React.Component {
 }
 
 Bookmark.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
 };
 
-export default Bookmark;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Bookmark);

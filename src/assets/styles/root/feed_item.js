@@ -38,7 +38,7 @@ export function styles(type = false) {
       fontSize: 12,
       paddingTop: 2,
     },
-    description: {
+    descriptionText: {
       flexWrap: 'wrap',
       marginBottom: 5,
     },

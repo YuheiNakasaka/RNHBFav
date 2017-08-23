@@ -9,11 +9,18 @@ export const nightModeStyle = {
   container: {
     backgroundColor: baseColor,
   },
+  content: {
+    backgroundColor: baseColor,
+  },
   header: {
     backgroundColor: navColor,
     borderBottomColor: navColor,
   },
   headerTitle: {
+    color: textColor,
+  },
+  headerBackIcon: {
+    fontSize: 30,
     color: textColor,
   },
   headerUserIcon: {
@@ -61,7 +68,7 @@ export const nightModeStyle = {
     fontSize: 12,
     paddingTop: 2,
   },
-  description: {
+  descriptionText: {
     flexWrap: 'wrap',
     marginBottom: 5,
     color: textColor,
@@ -69,5 +76,91 @@ export const nightModeStyle = {
   articleTitle: {
     flexWrap: 'wrap',
     color: linkColor,
+  },
+  // bookmark detail screen
+  userBar: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    borderBottomColor: navColor,
+    borderBottomWidth: 1,
+  },
+  userBarLeft: {
+    width: 50,
+  },
+  userBarRight: {
+    flex: 1,
+  },
+  userBarRightInner: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  userBarRightInnerText: {
+    fontWeight: 'bold',
+    color: textColor,
+  },
+  userIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 4,
+  },
+  entryTitle: {
+    flexWrap: 'wrap',
+    fontSize: 16,
+    color: linkColor,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  entryText: {
+    flexWrap: 'wrap',
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    fontSize: 12,
+    color: grayColor,
+  },
+  entryLinkText: {
+    fontSize: 12,
+    color: grayColor,
+  },
+  entryDateText: {
+    fontSize: 12,
+    color: grayColor,
+  },
+  bookmarkCount: {
+    flexWrap: 'wrap',
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderTopColor: navColor,
+    borderTopWidth: 1,
+    borderBottomColor: navColor,
+    borderBottomWidth: 1,
+  },
+  bookmarkCountText: {
+    fontSize: 16,
+    color: linkColor,
+  },
+  footer: {
+    height: 40,
+    justifyContent: 'flex-end',
+    backgroundColor: navColor,
+    borderTopColor: navColor,
+  },
+  footerBookmarkButtonIcon: {
+    fontSize: 24,
+    color: textColor,
+  },
+  footerShareButtonIcon: {
+    fontSize: 20,
+    color: textColor,
   },
 };

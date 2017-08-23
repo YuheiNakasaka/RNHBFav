@@ -23,7 +23,7 @@ class FeedItem extends React.Component {
   descriptionComponent(text) {
     if (text !== '') {
       return (
-        <Text style={styles(this.props.isNightMode).description}>{ text }</Text>
+        <Text style={styles(this.props.isNightMode).descriptionText}>{ text }</Text>
       );
     }
     return null;
