@@ -8,6 +8,7 @@ import {
   ListItem,
 } from 'native-base';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { profileIcon, readableDate } from '../../libs/utils';
 import { styles } from '../../assets/styles/bookmark_comment/comment_item';
@@ -29,9 +30,9 @@ class CommentItem extends React.Component {
       return null;
     }
     return (
-      <View style={styles.rightTopUserStars}>
-        <MaterialIcon name="star" style={styles.rightTopUserStarsIcon} />
-        <Text style={styles.rightTopUserStarsText}>{ totalStar }</Text>
+      <View style={styles(this.props.isNightMode).rightTopUserStars}>
+        <MaterialIcon name="star" style={styles(this.props.isNightMode).rightTopUserStarsIcon} />
+        <Text style={styles(this.props.isNightMode).rightTopUserStarsText}>{ totalStar }</Text>
       </View>
     );
   }
@@ -39,8 +40,8 @@ class CommentItem extends React.Component {
   thumbnailComponent() {
     const { user } = this.state.item;
     return (
-      <View style={styles.itemLeftInner}>
-        <Image style={styles.profileIcon} source={{ uri: profileIcon(user) }} />
+      <View style={styles(this.props.isNightMode).itemLeftInner}>
+        <Image style={styles(this.props.isNightMode).profileIcon} source={{ uri: profileIcon(user) }} />
       </View>
     );
   }
@@ -48,13 +49,13 @@ class CommentItem extends React.Component {
   rightTopComponent() {
     const { user, timestamp } = this.state.item;
     return (
-      <View style={styles.rightTop}>
-        <View style={styles.rightTopUserName}>
-          <Text style={styles.rightTopUserNameText}>{ user }</Text>
+      <View style={styles(this.props.isNightMode).rightTop}>
+        <View style={styles(this.props.isNightMode).rightTopUserName}>
+          <Text style={styles(this.props.isNightMode).rightTopUserNameText}>{ user }</Text>
           { this.starComponent() }
         </View>
-        <View style={styles.rightTopCreatedAt}>
-          <Text style={styles.rightTopCreatedAtText}>{ readableDate(timestamp) }</Text>
+        <View style={styles(this.props.isNightMode).rightTopCreatedAt}>
+          <Text style={styles(this.props.isNightMode).rightTopCreatedAtText}>{ readableDate(timestamp) }</Text>
         </View>
       </View>
     );
@@ -68,17 +69,17 @@ class CommentItem extends React.Component {
     }
 
     return (
-      <Text style={styles.commentText}>{ `${joinedTags} ${comment}` }</Text>
+      <Text style={styles(this.props.isNightMode).commentText}>{ `${joinedTags} ${comment}` }</Text>
     );
   }
 
   render() {
     return (
-      <ListItem style={styles.item}>
-        <View style={styles.itemLeft}>
+      <ListItem style={styles(this.props.isNightMode).bookmarkCommentListItem}>
+        <View style={styles(this.props.isNightMode).itemLeft}>
           { this.thumbnailComponent() }
         </View>
-        <View style={styles.itemRight}>
+        <View style={styles(this.props.isNightMode).itemRight}>
           { this.rightTopComponent() }
           { this.commentComponent() }
         </View>
@@ -88,7 +89,22 @@ class CommentItem extends React.Component {
 }
 
 CommentItem.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
 };
 
-export default CommentItem;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CommentItem);

@@ -18,9 +18,11 @@ import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feed from './Feed';
 import { getUserData } from '../../models/userStorage';
+import { getStyleData } from '../../models/styleStorage';
 import { profileIcon, itemObject } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
+import { updateStyleType } from '../../actions/style';
 import { styles } from '../../assets/styles/root/index';
 
 class Root extends React.Component {
@@ -31,15 +33,22 @@ class Root extends React.Component {
       urlText: '',
     };
     this.updateUser = this.props.updateUser;
+    this.updateStyleType = this.props.updateStyleType;
   }
 
   componentDidMount() {
+    // ユーザーデータをstateにロード
     getUserData().then((userData) => {
       this.updateUser(userData);
     }).catch(() => {
       console.log('no user data');
       this.updateUser({});
       Actions.auth();
+    });
+
+    // styleデータをstateにロード
+    getStyleData().then((resp) => {
+      this.updateStyleType(resp.isNightMode);
     });
   }
 
@@ -69,7 +78,7 @@ class Root extends React.Component {
             Actions.menu({ userName: url_name });
           }}
         >
-          <Image style={styles.headerUserIcon} source={{ uri: profileIcon(url_name) }} />
+          <Image style={styles(this.props.isNightMode).headerUserIcon} source={{ uri: profileIcon(url_name) }} />
         </Button>
       );
     }
@@ -81,7 +90,7 @@ class Root extends React.Component {
           Actions.auth();
         }}
       >
-        <MaterialIcon name="login-variant" style={styles.headerLoginIcon} />
+        <MaterialIcon name="login-variant" style={styles(this.props.isNightMode).headerLoginIcon} />
       </Button>
     );
   }
@@ -95,7 +104,7 @@ class Root extends React.Component {
             this.setState({ urlBoxOpen: !this.state.urlBoxOpen });
           }}
         >
-          <MaterialIcon style={styles.headerRightIcon} name="plus" />
+          <MaterialIcon style={styles(this.props.isNightMode).headerRightIcon} name="plus" />
         </Button>
       );
     }
@@ -104,8 +113,8 @@ class Root extends React.Component {
 
   urlBoxHeaderComponent() {
     return (
-      <Header style={styles.header} searchBar>
-        <Item style={styles.urlBoxLeft}>
+      <Header style={styles(this.props.isNightMode).header} searchBar>
+        <Item style={styles(this.props.isNightMode).urlBoxLeft}>
           <Icon active name="link" />
           <Input
             placeholder="URLを追加"
@@ -122,7 +131,7 @@ class Root extends React.Component {
             this.setState({ urlBoxOpen: false });
           }}
         >
-          <Text style={styles.urlBoxButtonText}>キャンセル</Text>
+          <Text style={styles(this.props.isNightMode).urlBoxButtonText}>キャンセル</Text>
         </Button>
       </Header>
     );
@@ -133,12 +142,12 @@ class Root extends React.Component {
       return this.urlBoxHeaderComponent();
     }
     return (
-      <Header style={styles.header}>
+      <Header style={styles(this.props.isNightMode).header}>
         <Left>
           { this.headerLeftComponent() }
         </Left>
         <Body>
-          <Title style={styles.headerTitle}>RNHBFav</Title>
+          <Title style={styles(this.props.isNightMode).headerTitle}>RNHBFav</Title>
         </Body>
         <Right>
           { this.headerRightComponent() }
@@ -158,7 +167,7 @@ class Root extends React.Component {
 
   render() {
     return (
-      <Container style={styles.container}>
+      <Container style={styles(this.props.isNightMode).container}>
         { this.headerComponent() }
         { this.feedComponent() }
       </Container>
@@ -171,20 +180,24 @@ Root.defaultProps = {
 };
 
 Root.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   user: PropTypes.object,
   updateUser: PropTypes.func.isRequired,
+  updateStyleType: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { rootData } = state;
+  const { rootData, styleData } = state;
   return {
     user: rootData.user,
+    isNightMode: styleData.isNightMode,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     updateUser: user => dispatch(updateUser(user)),
+    updateStyleType: isNightMode => dispatch(updateStyleType(isNightMode)),
   };
 }
 

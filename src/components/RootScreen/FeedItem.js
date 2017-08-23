@@ -8,6 +8,7 @@ import {
   ListItem,
 } from 'native-base';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { styles } from '../../assets/styles/root/feed_item';
 
@@ -22,7 +23,7 @@ class FeedItem extends React.Component {
   descriptionComponent(text) {
     if (text !== '') {
       return (
-        <Text style={styles.description}>{ text }</Text>
+        <Text style={styles(this.props.isNightMode).descriptionText}>{ text }</Text>
       );
     }
     return null;
@@ -32,26 +33,28 @@ class FeedItem extends React.Component {
     const { title, description, creator, userIcon, date } = this.state.item;
     return (
       <ListItem
+        transparent
         onPress={() => {
           Actions.bookmark({ item: this.state.item });
         }}
+        style={styles(this.props.isNightMode).feedListItem}
       >
-        <View style={styles.left}>
-          <View style={styles.leftInner}>
-            <Image style={styles.userIcon} source={{ uri: userIcon }} />
+        <View style={styles(this.props.isNightMode).left}>
+          <View style={styles(this.props.isNightMode).leftInner}>
+            <Image style={styles(this.props.isNightMode).userIcon} source={{ uri: userIcon }} />
           </View>
         </View>
-        <View style={styles.right}>
-          <View style={styles.rightTop}>
-            <View style={styles.rightTopUserName}>
-              <Text style={styles.rightTopUserNameText}>{ creator }</Text>
+        <View style={styles(this.props.isNightMode).right}>
+          <View style={styles(this.props.isNightMode).rightTop}>
+            <View style={styles(this.props.isNightMode).rightTopUserName}>
+              <Text style={styles(this.props.isNightMode).rightTopUserNameText}>{ creator }</Text>
             </View>
-            <View style={styles.rightTopCreatedAt}>
-              <Text style={styles.rightTopCreatedAtText}>{ date }</Text>
+            <View style={styles(this.props.isNightMode).rightTopCreatedAt}>
+              <Text style={styles(this.props.isNightMode).rightTopCreatedAtText}>{ date }</Text>
             </View>
           </View>
           { this.descriptionComponent(description) }
-          <Text style={styles.articleTitle}>{ title }</Text>
+          <Text style={styles(this.props.isNightMode).articleTitle}>{ title }</Text>
         </View>
       </ListItem>
     );
@@ -60,6 +63,21 @@ class FeedItem extends React.Component {
 
 FeedItem.propTypes = {
   item: PropTypes.object.isRequired,
+  isNightMode: PropTypes.bool.isRequired,
 };
 
-export default FeedItem;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FeedItem);
