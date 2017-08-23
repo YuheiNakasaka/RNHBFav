@@ -16,12 +16,13 @@ import {
   Input,
 } from 'native-base';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchMyBookmark, postMyBookmark, deleteMyBookmark } from '../../models/api';
 import { truncate, alert } from '../../libs/utils';
 import MySpinner from '../CommonComponent/Spinner';
-import { styles } from '../../assets/styles/bookmark_edit/index';
+import { styles, grayColor } from '../../assets/styles/bookmark_edit/index';
 
 
 class BookmarkEdit extends React.Component {
@@ -95,7 +96,7 @@ class BookmarkEdit extends React.Component {
   headerComponent() {
     if (this.state.item === null) return null;
     return (
-      <Header style={styles.header}>
+      <Header style={styles(this.props.isNightMode).header}>
         <Left>
           <Button
             transparent
@@ -103,11 +104,11 @@ class BookmarkEdit extends React.Component {
               Actions.pop();
             }}
           >
-            <MaterialIcon name="window-close" style={styles.headerIcon} />
+            <MaterialIcon name="window-close" style={styles(this.props.isNightMode).headerIcon} />
           </Button>
         </Left>
         <Body>
-          <Text style={styles.headerBodyText}>{ truncate(this.state.item.title) }</Text>
+          <Text style={styles(this.props.isNightMode).headerBodyText}>{ truncate(this.state.item.title) }</Text>
         </Body>
         { this.crudButtonComponent() }
       </Header>
@@ -124,7 +125,7 @@ class BookmarkEdit extends React.Component {
               this.deleteMyBookmark();
             }}
           >
-            <Text style={styles.deleteButtonText}>削除</Text>
+            <Text style={styles(this.props.isNightMode).deleteButtonText}>削除</Text>
           </Button>
           <Button
             transparent
@@ -132,7 +133,7 @@ class BookmarkEdit extends React.Component {
               this.postMyBookmark();
             }}
           >
-            <Text style={styles.editButtonText}>編集</Text>
+            <Text style={styles(this.props.isNightMode).editButtonText}>編集</Text>
           </Button>
         </Right>
       );
@@ -145,7 +146,7 @@ class BookmarkEdit extends React.Component {
             this.postMyBookmark();
           }}
         >
-          <Text style={styles.addButtonText}>追加</Text>
+          <Text style={styles(this.props.isNightMode).addButtonText}>追加</Text>
         </Button>
       </Right>
     );
@@ -165,7 +166,7 @@ class BookmarkEdit extends React.Component {
   }
 
   twitterButtonComponent() {
-    const iconStyle = this.state.isTweeted ? styles.twitterIconClicked : styles.twitterIcon;
+    const iconStyle = this.state.isTweeted ? styles(this.props.isNightMode).twitterIconClicked : styles(this.props.isNightMode).twitterIcon;
     return (
       <Button
         transparent
@@ -188,8 +189,8 @@ class BookmarkEdit extends React.Component {
           this.setState({ isPrivate: !this.state.isPrivate });
         }}
       >
-        <MaterialIcon style={styles.accountIcon} name={iconType} />
-        <Text style={styles.privacyText}>{ privacyText }</Text>
+        <MaterialIcon style={styles(this.props.isNightMode).accountIcon} name={iconType} />
+        <Text style={styles(this.props.isNightMode).privacyText}>{ privacyText }</Text>
       </Button>
     );
   }
@@ -205,7 +206,7 @@ class BookmarkEdit extends React.Component {
 
   render() {
     return (
-      <Container style={styles.container}>
+      <Container style={styles(this.props.isNightMode).container}>
         { this.headerComponent() }
         { this.spinnerComponent() }
         <Content
@@ -216,7 +217,8 @@ class BookmarkEdit extends React.Component {
               multiline
               autoFocus
               placeholder="コメントを追加"
-              style={[styles.commentInput, this.state.textInputHeight]}
+              style={[styles(this.props.isNightMode).commentInput, this.state.textInputHeight]}
+              placeholderTextColor={grayColor}
               onChangeText={text => this.setState({ commentText: text })}
               value={this.state.commentText}
             />
@@ -234,8 +236,23 @@ BookmarkEdit.defaultProps = {
 };
 
 BookmarkEdit.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object,
   link: PropTypes.string,
 };
 
-export default BookmarkEdit;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BookmarkEdit);

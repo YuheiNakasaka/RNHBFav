@@ -1,9 +1,9 @@
-const navColor = '#1B2737';
-const baseColor = '#151E29';
-const linkColor = '#2d6bc4';// Twitterの本家リンク色は強すぎかも '#1D8DEE';
-const textColor = '#ffffff';
-const grayColor = '#677483';
-const dividerColor = '#000000';
+export const navColor = '#1B2737';
+export const baseColor = '#151E29';
+export const linkColor = '#2d6bc4';// Twitterの本家リンク色は強すぎかも '#1D8DEE';
+export const textColor = '#ffffff';
+export const grayColor = '#677483';
+export const dividerColor = '#000000';
 
 export const nightModeStyle = {
   container: {
@@ -208,6 +208,26 @@ export const nightModeStyle = {
   },
   footerRefreshButtonIcon: {
     fontSize: 24,
+    color: textColor,
+  },
+
+  // bookmark edit
+  commentInput: {
+    color: textColor,
+  },
+  placeholderTextColor: {
+    color: grayColor,
+  },
+  twitterIcon: {
+    fontSize: 24,
+    color: grayColor,
+  },
+  accountIcon: {
+    fontSize: 24,
+    color: textColor,
+  },
+  privacyText: {
+    marginLeft: 5,
     color: textColor,
   },
 };
