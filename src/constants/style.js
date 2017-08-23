@@ -1,0 +1,1 @@
+export const UPDATE_STYLE_TYPE = 'UPDATE_STYLE_TYPE';
