@@ -50,6 +50,14 @@ export const nightModeStyle = {
     backgroundColor: navColor,
     borderBottomColor: baseColor,
   },
+  footer: {
+    height: 40,
+    justifyContent: 'flex-end',
+    backgroundColor: navColor,
+    borderTopColor: navColor,
+  },
+
+  // root
   feedListItem: {
     marginLeft: 0,
     paddingLeft: 15,
@@ -77,6 +85,7 @@ export const nightModeStyle = {
     flexWrap: 'wrap',
     color: linkColor,
   },
+
   // bookmark detail screen
   userBar: {
     flex: 1,
@@ -149,12 +158,6 @@ export const nightModeStyle = {
     fontSize: 16,
     color: linkColor,
   },
-  footer: {
-    height: 40,
-    justifyContent: 'flex-end',
-    backgroundColor: navColor,
-    borderTopColor: navColor,
-  },
   footerBookmarkButtonIcon: {
     fontSize: 24,
     color: textColor,
@@ -162,5 +165,35 @@ export const nightModeStyle = {
   footerShareButtonIcon: {
     fontSize: 20,
     color: textColor,
+  },
+
+  // bookmark comment
+  listWrapPopularComments: {
+    padding: 5,
+    backgroundColor: grayColor,
+  },
+  listWrapPopularCommentsText: {
+    color: textColor,
+  },
+  listWrapAllComments: {
+    padding: 5,
+    backgroundColor: grayColor,
+  },
+  listWrapAllCommentsText: {
+    color: textColor,
+  },
+  commentText: {
+    flexWrap: 'wrap',
+    marginTop: 5,
+    marginBottom: 5,
+    color: textColor,
+  },
+  bookmarkCommentListItem: {
+    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 0,
+    paddingLeft: 15,
+    backgroundColor: navColor,
+    borderBottomColor: baseColor,
   },
 };

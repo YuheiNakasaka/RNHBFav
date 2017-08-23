@@ -5,6 +5,7 @@ import {
   FlatList,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import CommentItem from './CommentItem';
 import { fetchBookmarkInfo, getBookmarkStar } from '../../models/api';
 import { bookmarkCommentUrl } from '../../libs/utils';
@@ -67,11 +68,11 @@ class Comment extends React.Component {
       if (bookmarks.length === 0) return null;
       return (
         <View>
-          <View style={styles.listWrapPopularComments}>
-            <Text style={styles.listWrapPopularCommentsText}>人気</Text>
+          <View style={styles(this.props.isNightMode).listWrapPopularComments}>
+            <Text style={styles(this.props.isNightMode).listWrapPopularCommentsText}>人気</Text>
           </View>
           <FlatList
-            style={styles.list}
+            style={styles(this.props.isNightMode).list}
             data={bookmarks}
             renderItem={({ item }) => (
               <CommentItem item={item} />
@@ -88,11 +89,11 @@ class Comment extends React.Component {
     if (this.state.entry !== null) {
       return (
         <View>
-          <View style={styles.listWrapAllComments}>
-            <Text style={styles.listWrapAllCommentsText}>全て</Text>
+          <View style={styles(this.props.isNightMode).listWrapAllComments}>
+            <Text style={styles(this.props.isNightMode).listWrapAllCommentsText}>全て</Text>
           </View>
           <FlatList
-            style={styles.list}
+            style={styles(this.props.isNightMode).list}
             data={this.state.entry.bookmarks}
             renderItem={({ item }) => (
               <CommentItem item={item} />
@@ -116,7 +117,7 @@ class Comment extends React.Component {
 
   render() {
     return (
-      <View style={styles.listWrap}>
+      <View style={styles(this.props.isNightMode).listWrap}>
         { this.spinnerComponent() }
         { this.popularCommentsComponent() }
         { this.commentsComponent() }
@@ -126,7 +127,22 @@ class Comment extends React.Component {
 }
 
 Comment.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
 };
 
-export default Comment;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Comment);

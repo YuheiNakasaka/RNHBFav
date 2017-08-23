@@ -12,6 +12,7 @@ import {
   Button,
 } from 'native-base';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -29,7 +30,7 @@ class BookmarkComment extends React.Component {
   render() {
     return (
       <Container>
-        <Header style={styles.header}>
+        <Header style={styles(this.props.isNightMode).header}>
           <Left>
             <Button
               transparent
@@ -37,15 +38,15 @@ class BookmarkComment extends React.Component {
                 Actions.pop();
               }}
             >
-              <MaterialIcon name="window-close" style={styles.headerIcon} />
+              <MaterialIcon name="window-close" style={styles(this.props.isNightMode).headerIcon} />
             </Button>
           </Left>
           <Body>
-            <Title style={styles.headerTitle}>{ this.state.item.bookmarkCount } users</Title>
+            <Title style={styles(this.props.isNightMode).headerTitle}>{ this.state.item.bookmarkCount } users</Title>
           </Body>
           <Right />
         </Header>
-        <Content style={styles.content}>
+        <Content style={styles(this.props.isNightMode).content}>
           <Comment link={this.state.item.link} />
         </Content>
       </Container>
@@ -54,7 +55,22 @@ class BookmarkComment extends React.Component {
 }
 
 BookmarkComment.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
 };
 
-export default BookmarkComment;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BookmarkComment);
