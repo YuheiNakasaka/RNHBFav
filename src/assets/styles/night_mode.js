@@ -196,4 +196,18 @@ export const nightModeStyle = {
     backgroundColor: navColor,
     borderBottomColor: baseColor,
   },
+
+  // entry
+  footerBackIcon: {
+    fontSize: 30,
+    color: textColor,
+  },
+  footerBackIconDisabled: {
+    fontSize: 30,
+    color: grayColor,
+  },
+  footerRefreshButtonIcon: {
+    fontSize: 24,
+    color: textColor,
+  },
 };

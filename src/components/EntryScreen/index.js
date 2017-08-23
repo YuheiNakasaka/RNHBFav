@@ -13,6 +13,7 @@ import {
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Share from 'react-native-share';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchBookmarkInfo } from '../../models/api';
@@ -47,7 +48,7 @@ class Entry extends Component {
 
   headerComponent() {
     return (
-      <Header style={styles.header}>
+      <Header style={styles(this.props.isNightMode).header}>
         <Left>
           <Button
             transparent
@@ -55,11 +56,11 @@ class Entry extends Component {
               Actions.pop();
             }}
           >
-            <MaterialIcon name="chevron-left" style={styles.headerIcon} />
+            <MaterialIcon name="chevron-left" style={styles(this.props.isNightMode).headerIcon} />
           </Button>
         </Left>
         <Body>
-          <Title style={styles.headerTitle}>{ this.state.item.title }</Title>
+          <Title style={styles(this.props.isNightMode).headerTitle}>{ this.state.item.title }</Title>
         </Body>
         <Right />
       </Header>
@@ -102,7 +103,7 @@ class Entry extends Component {
 
   footerComponent() {
     return (
-      <Footer style={styles.footer}>
+      <Footer style={styles(this.props.isNightMode).footer}>
         <FooterTab>
           { this.webviewBackButtonComponent() }
           { this.refreshButtonComponent() }
@@ -115,14 +116,14 @@ class Entry extends Component {
   }
 
   webviewBackButtonComponent() {
-    const footerBackIconStyle = this.state.canGoBack ? styles.footerBackIcon : styles.footerBackIconDisabled;
+    const footerBackIconStyle = this.state.canGoBack ? styles(this.props.isNightMode).footerBackIcon : styles(this.props.isNightMode).footerBackIconDisabled;
     return (
       <Button
         disabled={!this.state.canGoBack}
         onPress={() => {
           this.state.webview.goBack();
         }}
-        style={styles.footerBackButton}
+        style={styles(this.props.isNightMode).footerBackButton}
       >
         <MaterialIcon name="chevron-left" style={footerBackIconStyle} />
       </Button>
@@ -137,7 +138,7 @@ class Entry extends Component {
           this.state.webview.reload();
         }}
       >
-        <MaterialIcon name="refresh" style={styles.footerRefreshButtonIcon} />
+        <MaterialIcon name="refresh" style={styles(this.props.isNightMode).footerRefreshButtonIcon} />
       </Button>
     );
   }
@@ -150,7 +151,7 @@ class Entry extends Component {
           Actions.bookmarkEdit({ item: this.state.item });
         }}
       >
-        <MaterialIcon name="pencil-box-outline" style={styles.footerBookmarkButtonIcon} />
+        <MaterialIcon name="pencil-box-outline" style={styles(this.props.isNightMode).footerBookmarkButtonIcon} />
       </Button>
     );
   }
@@ -163,7 +164,7 @@ class Entry extends Component {
           Share.open({ url: this.state.item.link }).catch((err) => { console.log(err); });
         }}
       >
-        <MaterialIcon name="share-variant" style={styles.footerShareButtonIcon} />
+        <MaterialIcon name="share-variant" style={styles(this.props.isNightMode).footerShareButtonIcon} />
       </Button>
     );
   }
@@ -177,7 +178,7 @@ class Entry extends Component {
           Actions.bookmarkComment({ item: this.state.item });
         }}
       >
-        <Text style={styles.bookmarkCountText}>{ bookmarkCount } users</Text>
+        <Text style={styles(this.props.isNightMode).bookmarkCountText}>{ bookmarkCount } users</Text>
       </Button>
     );
   }
@@ -195,6 +196,21 @@ class Entry extends Component {
 
 Entry.propTypes = {
   item: PropTypes.object.isRequired,
+  isNightMode: PropTypes.bool.isRequired,
 };
 
-export default Entry;
+function mapStateToProps(state) {
+  const { styleData } = state;
+  return {
+    isNightMode: styleData.isNightMode,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Entry);
