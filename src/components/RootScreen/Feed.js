@@ -86,7 +86,7 @@ class Feed extends React.Component {
       <View>
         { this.spinnerComponent() }
         <FlatList
-          style={styles.list}
+          style={styles(this.props.isNightMode).list}
           keyExtractor={(item, i) => `${item.uid}_${i}`}
           data={this.props.items}
           extraData={this.props.items}
@@ -104,6 +104,7 @@ class Feed extends React.Component {
 }
 
 Feed.propTypes = {
+  isNightMode: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
   feedType: PropTypes.string.isRequired,
@@ -114,11 +115,12 @@ Feed.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { rootData } = state;
+  const { rootData, styleData } = state;
   return {
     items: rootData.items,
     feedType: rootData.feedType,
     loading: rootData.loading,
+    isNightMode: styleData.isNightMode,
   };
 }
 
