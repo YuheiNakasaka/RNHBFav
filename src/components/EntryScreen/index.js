@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import Share from 'react-native-share';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchBookmarkInfo } from '../../models/api';
-import { alert, itemObject } from '../../libs/utils';
+import { itemObject } from '../../libs/utils';
 import { styles } from '../../assets/styles/entry/index';
 
 
@@ -78,7 +78,6 @@ class Entry extends Component {
         onError={() => {
           console.log('error');
           this.setState({ isLoading: false });
-          alert('通信エラー', '電波状況を確認してからお試しください');
         }}
         onLoadStart={() => {
           console.log('load start');
