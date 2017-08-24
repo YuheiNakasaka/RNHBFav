@@ -11,6 +11,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import WKWebView from 'react-native-wkwebview-reborn';
 import { CONSUMER_KEY, CONSUMER_SECRET } from '../../constants/config';
 import OAuth from '../../libs/oauth';
 import { saveUserData } from '../../models/userStorage';
@@ -69,11 +70,11 @@ class Auth extends Component {
     const { authorizeUrl } = this.state;
     if (authorizeUrl === null) return null;
     return (
-      <WebView
+      <WKWebView
         ref={(ref) => { this.state.webview = ref; }}
         source={{ uri: authorizeUrl }}
         onNavigationStateChange={(event) => {
-          // if user permit to access, try to get access token and save it to AsyncStorage
+        // if user permit to access, try to get access token and save it to AsyncStorage
           if (event.url.match(/oauth_verifier/)) {
             this.state.oauth.getAccessToken(event.url).then((res) => {
               if (res && !res.oauth_problem) {

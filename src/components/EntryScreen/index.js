@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Share from 'react-native-share';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import WKWebView from 'react-native-wkwebview-reborn';
 import { fetchBookmarkInfo } from '../../models/api';
 import { itemObject } from '../../libs/utils';
 import { styles } from '../../assets/styles/entry/index';
@@ -71,8 +72,7 @@ class Entry extends Component {
     const { link } = this.state.item;
     if (link === undefined || link === null) return null;
     return (
-      <WebView
-        scalesPageToFit
+      <WKWebView
         ref={(ref) => { this.state.webview = ref; }}
         source={{ uri: link }}
         startInLoadingState={this.state.isLoading}
@@ -93,7 +93,7 @@ class Entry extends Component {
           console.log('renderError');
         }}
         onNavigationStateChange={(event) => {
-          // set current url to bookmark the article which you are reading now
+        // set current url to bookmark the article which you are reading now
           this.currentUrl = event.url;
           this.setState({ canGoBack: event.canGoBack });
         }}
