@@ -49,6 +49,8 @@ class Root extends React.Component {
     // styleデータをstateにロード
     getStyleData().then((resp) => {
       this.updateStyleType(resp.isNightMode);
+    }).catch(() => {
+      console.log('no style data');
     });
   }
 
