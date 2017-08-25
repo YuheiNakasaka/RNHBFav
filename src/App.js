@@ -8,6 +8,7 @@ import Entry from './components/EntryScreen/index';
 import Auth from './components/AuthScreen/index';
 import Menu from './components/MenuScreen/index';
 import Tour from './components/TourScreen/index';
+import Eula from './components/EulaScreen/index';
 
 const App = () => (
   <Router>
@@ -22,6 +23,7 @@ const App = () => (
       <Scene key="bookmarkEdit" component={BookmarkEdit} hideNavBar panHandlers={null} />
       <Scene key="menu" component={Menu} hideNavBar panHandlers={null} />
       <Scene key="tour" component={Tour} hideNavBar panHandlers={null} />
+      <Scene key="eula" component={Eula} hideNavBar panHandlers={null} />
     </Scene>
   </Router>
 );

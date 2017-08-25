@@ -87,7 +87,7 @@ class Tour extends Component {
           <View style={styles.metaTermView}>
             <TouchableWithoutFeedback
               onPress={() => {
-                Actions.eulas();
+                Actions.eula();
               }}
             >
               <View>
