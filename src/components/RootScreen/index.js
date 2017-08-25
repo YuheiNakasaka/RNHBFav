@@ -37,21 +37,22 @@ class Root extends React.Component {
   }
 
   componentDidMount() {
-    // ユーザーデータをstateにロード
-    getUserData().then((userData) => {
-      this.updateUser(userData);
-    }).catch(() => {
-      console.log('no user data');
-      this.updateUser({});
-      Actions.auth();
-    });
-
-    // styleデータをstateにロード
-    getStyleData().then((resp) => {
-      this.updateStyleType(resp.isNightMode);
-    }).catch(() => {
-      console.log('no style data');
-    });
+    Actions.tour();
+    // // ユーザーデータをstateにロード
+    // getUserData().then((userData) => {
+    //   this.updateUser(userData);
+    // }).catch(() => {
+    //   console.log('no user data');
+    //   this.updateUser({});
+    //   Actions.auth();
+    // });
+    //
+    // // styleデータをstateにロード
+    // getStyleData().then((resp) => {
+    //   this.updateStyleType(resp.isNightMode);
+    // }).catch(() => {
+    //   console.log('no style data');
+    // });
   }
 
 
