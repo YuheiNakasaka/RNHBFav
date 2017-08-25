@@ -1,6 +1,6 @@
 export const navColor = '#1B2737';
 export const baseColor = '#151E29';
-export const linkColor = '#2d6bc4';// Twitterの本家リンク色は強すぎかも '#1D8DEE';
+export const linkColor = '#1D8DEE';
 export const textColor = '#ffffff';
 export const grayColor = '#677483';
 export const dividerColor = '#000000';
