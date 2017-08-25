@@ -126,7 +126,7 @@ class Menu extends React.Component {
             </ListItem>
             <ListItem
               onPress={() => {
-                // TODO: 利用規約
+                Actions.eula();
               }}
               style={styles(this.props.isNightMode).listItem}
             >

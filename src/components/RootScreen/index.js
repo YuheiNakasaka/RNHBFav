@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feed from './Feed';
+import { saveAccessData, getAccessData, deleteAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
 import { profileIcon, itemObject } from '../../libs/utils';
@@ -34,27 +35,32 @@ class Root extends React.Component {
     };
     this.updateUser = this.props.updateUser;
     this.updateStyleType = this.props.updateStyleType;
-  }
 
-  componentDidMount() {
-    Actions.tour();
-    // // ユーザーデータをstateにロード
-    // getUserData().then((userData) => {
-    //   this.updateUser(userData);
-    // }).catch(() => {
-    //   console.log('no user data');
-    //   this.updateUser({});
-    //   Actions.auth();
-    // });
-    //
-    // // styleデータをstateにロード
-    // getStyleData().then((resp) => {
-    //   this.updateStyleType(resp.isNightMode);
-    // }).catch(() => {
-    //   console.log('no style data');
-    // });
-  }
+    // 初回起動か否か
+    getAccessData().then((res) => {
+      if (res.firstAccess === false) {
+        // ユーザーデータをstateにロード
+        getUserData().then((userData) => {
+          this.updateUser(userData);
+        }).catch(() => {
+          console.log('no user data');
+          this.updateUser({});
+          Actions.auth();
+        });
 
+        // styleデータをstateにロード
+        getStyleData().then((resp) => {
+          this.updateStyleType(resp.isNightMode);
+        }).catch(() => {
+          console.log('no style data');
+        });
+      } else {
+        saveAccessData({ firstAccess: false }).then(() => {
+          Actions.tour();
+        });
+      }
+    });
+  }
 
   onSubmitEditingHandler() {
     const urlText = this.state.urlText;
