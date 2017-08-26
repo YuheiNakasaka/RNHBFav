@@ -58,6 +58,9 @@ export function styles(type = false) {
       marginTop: 5,
       marginBottom: 5,
     },
+    commentLink: {
+      color: '#2d6bc4',
+    },
   };
 
   if (type) {

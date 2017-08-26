@@ -9,8 +9,11 @@ import {
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { profileIcon, readableDate } from '../../libs/utils';
+import Hyperlink from 'react-native-hyperlink';
+import { fetchBookmarkInfo } from '../../models/api';
+import { profileIcon, readableDate, itemObject } from '../../libs/utils';
 import { styles } from '../../assets/styles/bookmark_comment/comment_item';
 
 class CommentItem extends React.Component {
@@ -69,7 +72,18 @@ class CommentItem extends React.Component {
     }
 
     return (
-      <Text style={styles(this.props.isNightMode).commentText}>{ `${joinedTags} ${comment}` }</Text>
+      <Hyperlink
+        linkStyle={styles(this.props.isNightMode).commentLink}
+        onPress={(urlText) => {
+          fetchBookmarkInfo(urlText).then((resp) => {
+            Actions.modalEntry({ item: itemObject(resp, urlText) });
+          }).catch((e) => {
+            console.log(e);
+          });
+        }}
+      >
+        <Text style={styles(this.props.isNightMode).commentText}>{ `${joinedTags} ${comment}` }</Text>
+      </Hyperlink>
     );
   }
 

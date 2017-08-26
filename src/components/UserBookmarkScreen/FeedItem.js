@@ -11,6 +11,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Hyperlink from 'react-native-hyperlink';
+import { fetchBookmarkInfo } from '../../models/api';
+import { itemObject } from '../../libs/utils';
 import { styles } from '../../assets/styles/user_bookmark/feed_item';
 
 class FeedItem extends React.Component {
@@ -40,7 +43,18 @@ class FeedItem extends React.Component {
   descriptionComponent(text) {
     if (text !== '') {
       return (
-        <Text style={styles(this.props.isNightMode).descriptionText}>{ text }</Text>
+        <Hyperlink
+          linkStyle={styles(this.props.isNightMode).descriptionLink}
+          onPress={(urlText) => {
+            fetchBookmarkInfo(urlText).then((resp) => {
+              Actions.modalEntry({ item: itemObject(resp, urlText) });
+            }).catch((e) => {
+              console.log(e);
+            });
+          }}
+        >
+          <Text style={styles(this.props.isNightMode).descriptionText}>{ text }</Text>
+        </Hyperlink>
       );
     }
     return null;

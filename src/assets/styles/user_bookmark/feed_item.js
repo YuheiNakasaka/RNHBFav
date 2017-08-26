@@ -54,6 +54,9 @@ export function styles(type = false) {
       flexWrap: 'wrap',
       marginBottom: 5,
     },
+    descriptionLink: {
+      color: '#2d6bc4',
+    },
     articleTitle: {
       flexWrap: 'wrap',
       color: '#2d6bc4',

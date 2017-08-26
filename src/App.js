@@ -15,17 +15,40 @@ const App = () => (
   <Router>
     <Scene modal>
       <Scene key="root" hideNavBar>
+
+        {/* TOPタイムライン */}
         <Scene key="home" component={Root} initial />
+
+        {/* ブックマーク詳細 */}
         <Scene key="bookmark" component={Bookmark} />
+
+        {/* Webviewでエントリを開くページ */}
         <Scene key="entry" component={Entry} />
+
+        {/* ユーザーのブックマーク一覧を見るページ */}
         <Scene key="userBookmark" component={UserBookmark} />
       </Scene>
-      <Scene key="auth" component={Auth} hideNavBar panHandlers={null} />
-      <Scene key="bookmarkComment" component={BookmarkComment} hideNavBar panHandlers={null} />
-      <Scene key="bookmarkEdit" component={BookmarkEdit} hideNavBar panHandlers={null} />
+
+      {/* メニュー */}
       <Scene key="menu" component={Menu} hideNavBar panHandlers={null} />
+
+      {/* 初回のみツアーページ */}
       <Scene key="tour" component={Tour} hideNavBar panHandlers={null} />
+
+      {/* 利用規約 */}
       <Scene key="eula" component={Eula} hideNavBar panHandlers={null} />
+
+      {/* 認証ページ */}
+      <Scene key="auth" component={Auth} hideNavBar panHandlers={null} />
+
+      {/* ブコメ一覧 */}
+      <Scene key="bookmarkComment" component={BookmarkComment} hideNavBar panHandlers={null} />
+
+      {/* ブコメ投稿フォーム */}
+      <Scene key="bookmarkEdit" component={BookmarkEdit} hideNavBar panHandlers={null} />
+
+      {/* ModalでWebview開きたい時用 */}
+      <Scene key="modalEntry" component={Entry} hideNavBar panHandlers={null} />
     </Scene>
   </Router>
 );
