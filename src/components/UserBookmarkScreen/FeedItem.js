@@ -26,8 +26,8 @@ class FeedItem extends React.Component {
 
   starComponent() {
     const { stars, colored_stars } = this.state.item;
-    const starCount = stars || 0;
-    const colorStarCount = colored_stars || 0;
+    const starCount = stars.length || 0;
+    const colorStarCount = colored_stars.length || 0;
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;

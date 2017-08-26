@@ -55,8 +55,8 @@ function _assignStarInfoToItems(items) {
       // ブコメページと違いTLは同一ユーザーもいるのでnameチェックではユニークにならない
       // よってurlで同一性とユニーク性をチェック
       if (entry.uri === item.bookmarkCommentUrl) {
-        item.stars = entry.stars ? entry.stars.length : 0;
-        item.colored_stars = entry.colored_stars ? entry.colored_stars.length : 0;
+        item.stars = entry.stars ? entry.stars : [];
+        item.colored_stars = entry.colored_stars ? entry.colored_stars : [];
       }
     });
     return item;
