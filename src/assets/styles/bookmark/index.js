@@ -51,6 +51,9 @@ export function styles(type = false) {
       marginRight: 10,
       marginBottom: 10,
     },
+    descriptionLink: {
+      color: '#2d6bc4',
+    },
     entryTitle: {
       flexWrap: 'wrap',
       fontSize: 16,

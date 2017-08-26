@@ -20,7 +20,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Share from 'react-native-share';
+import Hyperlink from 'react-native-hyperlink';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { fetchBookmarkInfo } from '../../models/api';
+import { itemObject } from '../../libs/utils';
 import { styles } from '../../assets/styles/bookmark/index';
 
 
@@ -83,7 +86,18 @@ class Bookmark extends React.Component {
     if (description !== '') {
       return (
         <View style={styles(this.props.isNightMode).description}>
-          <Text style={styles(this.props.isNightMode).descriptionText}>{ description }</Text>
+          <Hyperlink
+            linkStyle={styles(this.props.isNightMode).descriptionLink}
+            onPress={(urlText) => {
+              fetchBookmarkInfo(urlText).then((resp) => {
+                Actions.entry({ item: itemObject(resp, urlText) });
+              }).catch((e) => {
+                console.log(e);
+              });
+            }}
+          >
+            <Text style={styles(this.props.isNightMode).descriptionText}>{ description }</Text>
+          </Hyperlink>
         </View>
       );
     }
