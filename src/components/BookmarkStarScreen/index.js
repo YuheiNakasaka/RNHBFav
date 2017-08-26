@@ -16,10 +16,9 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Comment from './Comment';
-import { styles } from '../../assets/styles/bookmark_comment/index';
+import { styles } from '../../assets/styles/bookmark_star/index';
 
-class BookmarkComment extends React.Component {
+class BookmarkStar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,19 +41,17 @@ class BookmarkComment extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title style={styles(this.props.isNightMode).headerTitle}>{ this.state.item.bookmarkCount } users</Title>
+            <Title style={styles(this.props.isNightMode).headerTitle}>スター</Title>
           </Body>
           <Right />
         </Header>
-        <Content style={styles(this.props.isNightMode).content}>
-          <Comment link={this.state.item.link} />
-        </Content>
+        <Content style={styles(this.props.isNightMode).content} />
       </Container>
     );
   }
 }
 
-BookmarkComment.propTypes = {
+BookmarkStar.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
 };
@@ -73,4 +70,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(BookmarkComment);
+)(BookmarkStar);

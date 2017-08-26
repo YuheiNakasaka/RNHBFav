@@ -10,6 +10,7 @@ import Menu from './components/MenuScreen/index';
 import Tour from './components/TourScreen/index';
 import Eula from './components/EulaScreen/index';
 import UserBookmark from './components/UserBookmarkScreen/index';
+import BookmarkStar from './components/BookmarkStarScreen/index';
 
 const App = () => (
   <Router>
@@ -27,6 +28,12 @@ const App = () => (
 
         {/* ユーザーのブックマーク一覧を見るページ */}
         <Scene key="userBookmark" component={UserBookmark} />
+
+        {/* ブコメ一覧 */}
+        <Scene key="bookmarkComment" component={BookmarkComment} hideNavBar panHandlers={null} />
+
+        {/* ブコメのスター付けてる人一覧 */}
+        <Scene key="bookmarkStar" component={BookmarkStar} hideNavBar panHandlers={null} />
       </Scene>
 
       {/* メニュー */}
@@ -40,9 +47,6 @@ const App = () => (
 
       {/* 認証ページ */}
       <Scene key="auth" component={Auth} hideNavBar panHandlers={null} />
-
-      {/* ブコメ一覧 */}
-      <Scene key="bookmarkComment" component={BookmarkComment} hideNavBar panHandlers={null} />
 
       {/* ブコメ投稿フォーム */}
       <Scene key="bookmarkEdit" component={BookmarkEdit} hideNavBar panHandlers={null} />

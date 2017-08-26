@@ -174,29 +174,37 @@ class Bookmark extends React.Component {
       return null;
     }
     return (
-      <View style={styles(this.props.isNightMode).entryStars}>
+      <TouchableOpacity
+        style={styles(this.props.isNightMode).entryStars}
+        activeOpacity={0.9}
+        onPress={() => {
+          Actions.bookmarkStar({ item: this.state.item });
+        }}
+      >
         <MaterialIcon name="star" style={styles(this.props.isNightMode).entryStarsIcon} />
         <Text style={styles(this.props.isNightMode).entryStarsText}>{ totalStar }</Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   entryWrapComponent() {
     return (
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={() => {
-          Actions.entry({ item: this.state.item });
-        }}
-      >
-        { this.titleComponent() }
-        { this.entryComponent() }
-        { this.linkComponent() }
+      <View>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => {
+            Actions.entry({ item: this.state.item });
+          }}
+        >
+          { this.titleComponent() }
+          { this.entryComponent() }
+          { this.linkComponent() }
+        </TouchableOpacity>
         <View style={styles(this.props.isNightMode).entryMeta}>
           { this.dateComponent() }
           { this.starComponent() }
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 

@@ -76,7 +76,7 @@ class CommentItem extends React.Component {
         linkStyle={styles(this.props.isNightMode).commentLink}
         onPress={(urlText) => {
           fetchBookmarkInfo(urlText).then((resp) => {
-            Actions.modalEntry({ item: itemObject(resp, urlText) });
+            Actions.entry({ item: itemObject(resp, urlText) });
           }).catch((e) => {
             console.log(e);
           });
