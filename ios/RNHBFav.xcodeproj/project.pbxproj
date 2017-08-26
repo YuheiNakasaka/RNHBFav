@@ -51,6 +51,7 @@
 		999EE5F32A4E49C1AD5B17E1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43A79847F3194273B9F5BE63 /* SimpleLineIcons.ttf */; };
 		99C43323A2CD4EE896DAAC35 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BDDBDA22DE4378B0166899 /* EvilIcons.ttf */; };
 		99C578051F445DD800856D07 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 99C578041F445DD800856D07 /* main.jsbundle */; };
+		99E8F8431F51A57E00CDC305 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */; };
 		A73AD05DBA4A403CA9E22571 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C09A83FABAA54F2386F498FE /* Entypo.ttf */; };
 		ACD63887894C41F28BFABB66 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9063D56212024FDA94529312 /* EvilIcons.ttf */; };
 		B4970EC066C24EDB99E30423 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 060B58BD6D4C478D978C55FA /* MaterialIcons.ttf */; };
@@ -353,6 +354,7 @@
 		9063D56212024FDA94529312 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		993AC0581F4F0CCF006DD327 /* RCTWKWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWKWebView.xcodeproj; path = "../node_modules/react-native-wkwebview-reborn/ios/RCTWKWebView.xcodeproj"; sourceTree = "<group>"; };
 		99C578041F445DD800856D07 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		99E8F8421F51A57E00CDC305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = RNHBFav/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9B00FE4A2DF44075A8FF2283 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A1BDDBDA22DE4378B0166899 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		A72179F73B2E4C148800CB50 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 			children = (
 				99C578041F445DD800856D07 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -1109,6 +1112,7 @@
 				15EABECE831B4045AEAEC16E /* Octicons.ttf in Resources */,
 				D2E9F84EECDD468FB6C0E097 /* Roboto_medium.ttf in Resources */,
 				B9A9BA9ABA464F17A61C718F /* Roboto.ttf in Resources */,
+				99E8F8431F51A57E00CDC305 /* LaunchScreen.xib in Resources */,
 				CC33EDF76BA14F74B09E6C8A /* rubicon-icon-font.ttf in Resources */,
 				99C578051F445DD800856D07 /* main.jsbundle in Resources */,
 				05B5E63D2E654D0B9B2A3D45 /* SimpleLineIcons.ttf in Resources */,
@@ -1223,6 +1227,17 @@
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99E8F8421F51A57E00CDC305 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
