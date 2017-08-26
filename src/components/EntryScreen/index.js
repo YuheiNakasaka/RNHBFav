@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, Text } from 'react-native';
+import { Linking, Text } from 'react-native';
 import {
   Container,
   Header,
@@ -63,7 +63,16 @@ class Entry extends Component {
         <Body>
           <Title style={styles(this.props.isNightMode).headerTitle}>{ this.state.item.title }</Title>
         </Body>
-        <Right />
+        <Right>
+          <Button
+            transparent
+            onPress={() => {
+              Linking.openURL(this.currentUrl);
+            }}
+          >
+            <MaterialIcon name="open-in-new" style={styles(this.props.isNightMode).headerRightIcon} />
+          </Button>
+        </Right>
       </Header>
     );
   }

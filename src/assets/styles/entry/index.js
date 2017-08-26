@@ -12,6 +12,11 @@ export function styles(type = false) {
       fontSize: 30,
       color: '#fff',
     },
+    headerRightIcon: {
+      paddingTop: 5,
+      fontSize: 24,
+      color: '#fff',
+    },
     content: {
       backgroundColor: '#fff',
     },
