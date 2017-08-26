@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Text, StatusBar } from 'react-native';
 import {
   Container,
   Header,
@@ -175,6 +175,7 @@ class Root extends React.Component {
   }
 
   render() {
+    StatusBar.setBarStyle('light-content', true);
     return (
       <Container style={styles(this.props.isNightMode).container}>
         { this.headerComponent() }
