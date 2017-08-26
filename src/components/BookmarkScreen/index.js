@@ -145,6 +145,22 @@ class Bookmark extends React.Component {
     return null;
   }
 
+  starComponent() {
+    const { stars, colored_stars } = this.state.item;
+    const starCount = stars || 0;
+    const colorStarCount = colored_stars || 0;
+    const totalStar = starCount + colorStarCount;
+    if (totalStar === 0) {
+      return null;
+    }
+    return (
+      <View style={styles(this.props.isNightMode).entryStars}>
+        <MaterialIcon name="star" style={styles(this.props.isNightMode).entryStarsIcon} />
+        <Text style={styles(this.props.isNightMode).entryStarsText}>{ totalStar }</Text>
+      </View>
+    );
+  }
+
   entryWrapComponent() {
     return (
       <TouchableOpacity
@@ -156,7 +172,10 @@ class Bookmark extends React.Component {
         { this.titleComponent() }
         { this.entryComponent() }
         { this.linkComponent() }
-        { this.dateComponent() }
+        <View style={styles(this.props.isNightMode).entryMeta}>
+          { this.dateComponent() }
+          { this.starComponent() }
+        </View>
       </TouchableOpacity>
     );
   }

@@ -54,6 +54,7 @@ export function feedItems(xml) {
           hash.userIcon = _iconImage(hash.creator);
           hash.entry = _fetchEntry(item['content:encoded'][0]);
           hash.entryImage = _fetchEntryImage(item['content:encoded'][0]);
+          hash.bookmarkCommentUrl = item.$['rdf:about'];
           return hash;
         } catch (e) {
           return null;

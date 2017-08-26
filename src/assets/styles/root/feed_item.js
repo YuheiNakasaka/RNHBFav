@@ -25,6 +25,18 @@ export function styles(type = false) {
     rightTopUserName: {
       flex: 1,
       alignItems: 'flex-start',
+      flexDirection: 'row',
+    },
+    rightTopUserStars: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    rightTopUserStarsIcon: {
+      color: '#F5AC0F',
+      fontSize: 15,
+    },
+    rightTopUserStarsText: {
+      color: '#F5AC0F',
     },
     rightTopCreatedAt: {
       flex: 1,

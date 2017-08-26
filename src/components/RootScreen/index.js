@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feed from './Feed';
-import { saveAccessData, getAccessData, deleteAccessData } from '../../models/accessStorage';
+import { saveAccessData, getAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
 import { profileIcon, itemObject } from '../../libs/utils';

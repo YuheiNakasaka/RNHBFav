@@ -9,7 +9,7 @@ import { getUserData } from './userStorage';
 // Fetch star info separately and reccursively to avoid 414 URL TOO LONG ERROR.
 const eventEmitter = new EventEmitter();
 let results = [];
-function fetchStarReccursively(links, offset, limit) {
+function _fetchStarReccursively(links, offset, limit) {
   if (offset > links.length) {
     // set name to entry object to use comments feed.
     results = results.map((result) => {
@@ -36,16 +36,37 @@ function fetchStarReccursively(links, offset, limit) {
     const newOffset = offset + 50;
     const newLimit = limit + 50;
     results = results.concat(JSON.parse(response._bodyText).entries);
-    fetchStarReccursively(links, newOffset, newLimit);
+    _fetchStarReccursively(links, newOffset, newLimit);
   }).catch((err) => {
     console.log(err.message);
   });
 }
 
+function _assignStarInfoToItems(items) {
+  // generate bookmark comment uri
+  const query = items.map((item) => {
+    const bCommentUrl = encodeURIComponent(item.bookmarkCommentUrl);
+    return `uri=${bCommentUrl}`;
+  });
+
+    // assign star info to each items
+  return getBookmarkStar(query).then(resp => items.map((item) => {
+    resp.entries.map((entry) => {
+      // ブコメページと違いTLは同一ユーザーもいるのでnameチェックではユニークにならない
+      // よってurlで同一性とユニーク性をチェック
+      if (entry.uri === item.bookmarkCommentUrl) {
+        item.stars = entry.stars ? entry.stars.length : 0;
+        item.colored_stars = entry.colored_stars ? entry.colored_stars.length : 0;
+      }
+    });
+    return item;
+  }));
+}
+
 // get star of bookmark commemt
 export function getBookmarkStar(links) {
   if (results.length > 0) results = [];
-  fetchStarReccursively(links, 0, 50);
+  _fetchStarReccursively(links, 0, 50);
   return new Promise((resolve, reject) => {
     try {
       eventEmitter.addListener('onFinishReccursiveFetch', () => {
@@ -69,7 +90,7 @@ export function fetchFavorites(userId, offset) {
 
   const url = `http://b.hatena.ne.jp/${userId}/favorite.rss?of=${offset}&with_me=1`;
 
-  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res)).catch((err) => {
+  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarInfoToItems(items))).catch((err) => {
     console.log(err.message);
   });
 }
@@ -86,7 +107,7 @@ export function fetchMyBookmarks(userId, offset) {
 
   const url = `http://b.hatena.ne.jp/${userId}/rss?of=${offset}`;
 
-  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res)).catch((err) => {
+  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarInfoToItems(items))).catch((err) => {
     console.log(err.message);
   });
 }

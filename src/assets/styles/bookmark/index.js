@@ -94,15 +94,33 @@ export function styles(type = false) {
       fontSize: 12,
       color: '#777',
     },
+    entryMeta: {
+      flex: 1,
+      flexDirection: 'row',
+    },
     entryDate: {
       flexWrap: 'wrap',
       marginLeft: 10,
       marginRight: 10,
       marginBottom: 10,
+      flexDirection: 'row',
     },
     entryDateText: {
       fontSize: 12,
       color: '#777',
+    },
+    entryStars: {
+      flexDirection: 'row',
+    },
+    entryStarsIcon: {
+      color: '#F5AC0F',
+      fontSize: 12,
+      paddingTop: 2,
+    },
+    entryStarsText: {
+      color: '#F5AC0F',
+      fontSize: 12,
+      paddingTop: 1,
     },
     bookmarkCount: {
       flexWrap: 'wrap',

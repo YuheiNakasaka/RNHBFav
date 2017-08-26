@@ -1,10 +1,10 @@
 import { UPDATE_FEED_ITEMS, UPDATE_USER, UPDATE_LOADING } from '../constants/root';
-import { fetchFavorites, fetchMyBookmarks } from '../models/api';
+import { fetchFavorites, fetchMyBookmarks, getBookmarkStar } from '../models/api';
 
 export function fetchFavoriteFeed(userId, offset) {
-  return fetchFavorites(userId, offset).then(resp => ({
+  return fetchFavorites(userId, offset).then(items => ({
     type: UPDATE_FEED_ITEMS,
-    items: resp,
+    items,
     feedType: 'timeline',
     offset,
     loading: false,
