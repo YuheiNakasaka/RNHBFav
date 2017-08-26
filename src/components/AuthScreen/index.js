@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, Text } from 'react-native';
+import { Text } from 'react-native';
 import {
   Container,
   Header,
@@ -16,6 +16,7 @@ import { CONSUMER_KEY, CONSUMER_SECRET } from '../../constants/config';
 import OAuth from '../../libs/oauth';
 import { saveUserData } from '../../models/userStorage';
 import { updateUser } from '../../actions/root';
+import { alert } from '../../libs/utils';
 import { styles } from '../../assets/styles/auth/index';
 
 class Auth extends Component {
@@ -85,6 +86,7 @@ class Auth extends Component {
                 });
               } else {
                 console.log('could not get access token');
+                alert('認証エラー', 'はてなのAPI側の問題で認証エラーが発生しました。左上の「閉じる」を押してから再度お試しください。');
               }
             });
           }

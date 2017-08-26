@@ -52,6 +52,7 @@
 		99C43323A2CD4EE896DAAC35 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BDDBDA22DE4378B0166899 /* EvilIcons.ttf */; };
 		99C578051F445DD800856D07 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 99C578041F445DD800856D07 /* main.jsbundle */; };
 		99E8F8431F51A57E00CDC305 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */; };
+		99E8F8D31F51BCBE00CDC305 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 99E8F8D21F51BCBE00CDC305 /* assets */; };
 		A73AD05DBA4A403CA9E22571 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C09A83FABAA54F2386F498FE /* Entypo.ttf */; };
 		ACD63887894C41F28BFABB66 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9063D56212024FDA94529312 /* EvilIcons.ttf */; };
 		B4970EC066C24EDB99E30423 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 060B58BD6D4C478D978C55FA /* MaterialIcons.ttf */; };
@@ -355,6 +356,7 @@
 		993AC0581F4F0CCF006DD327 /* RCTWKWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWKWebView.xcodeproj; path = "../node_modules/react-native-wkwebview-reborn/ios/RCTWKWebView.xcodeproj"; sourceTree = "<group>"; };
 		99C578041F445DD800856D07 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		99E8F8421F51A57E00CDC305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = RNHBFav/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		99E8F8D21F51BCBE00CDC305 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		9B00FE4A2DF44075A8FF2283 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A1BDDBDA22DE4378B0166899 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		A72179F73B2E4C148800CB50 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 		13B07FAE1A68108700A75B9A /* RNHBFav */ = {
 			isa = PBXGroup;
 			children = (
+				99E8F8D21F51BCBE00CDC305 /* assets */,
 				99C578041F445DD800856D07 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */,
@@ -1115,6 +1118,7 @@
 				99E8F8431F51A57E00CDC305 /* LaunchScreen.xib in Resources */,
 				CC33EDF76BA14F74B09E6C8A /* rubicon-icon-font.ttf in Resources */,
 				99C578051F445DD800856D07 /* main.jsbundle in Resources */,
+				99E8F8D31F51BCBE00CDC305 /* assets in Resources */,
 				05B5E63D2E654D0B9B2A3D45 /* SimpleLineIcons.ttf in Resources */,
 				FBA3F2B9468D408690180F6E /* Zocial.ttf in Resources */,
 				A73AD05DBA4A403CA9E22571 /* Entypo.ttf in Resources */,
@@ -1307,7 +1311,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YUHEI NAKASAKA (FL88LERKC5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1327,7 +1330,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.razokulover.RNHBFav;
+				PRODUCT_BUNDLE_IDENTIFIER = com.razokulover.rnhbfav;
 				PRODUCT_NAME = RNHBFav;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1338,7 +1341,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YUHEI NAKASAKA (FL88LERKC5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1357,7 +1359,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.razokulover.RNHBFav;
+				PRODUCT_BUNDLE_IDENTIFIER = com.razokulover.rnhbfav;
 				PRODUCT_NAME = RNHBFav;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

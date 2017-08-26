@@ -5,6 +5,7 @@ import {
 import OAuth from '../libs/oauth';
 import { CONSUMER_KEY, CONSUMER_SECRET } from '../constants/config';
 import { getUserData } from './userStorage';
+import { alert } from '../libs/utils';
 
 // Fetch star info separately and reccursively to avoid 414 URL TOO LONG ERROR.
 const eventEmitter = new EventEmitter();
@@ -92,6 +93,8 @@ export function fetchFavorites(userId, offset) {
 
   return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarInfoToItems(items))).catch((err) => {
     console.log(err.message);
+    alert('ネットワークエラー', '電波環境が良くなってから再度お試しください');
+    throw err.message;
   });
 }
 

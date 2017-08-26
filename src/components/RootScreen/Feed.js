@@ -71,11 +71,15 @@ class Feed extends React.Component {
         this.fetchMyBookmarkFeed(this.state.user.url_name, 0).then(() => {
           this.setState({ refreshing: false, offset: 0 });
           this.updateLoading(false);
+        }).catch(() => {
+          this.updateLoading(false);
         });
         break;
       default:
         this.fetchFavoriteFeed(this.state.user.url_name, 0).then(() => {
           this.setState({ refreshing: false, offset: 0 });
+          this.updateLoading(false);
+        }).catch(() => {
           this.updateLoading(false);
         });
     }

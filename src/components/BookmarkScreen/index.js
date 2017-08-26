@@ -35,6 +35,11 @@ class Bookmark extends React.Component {
     };
   }
 
+  validCount(obj) {
+    if (obj === undefined) return 0;
+    return obj.length;
+  }
+
   headerComponent() {
     return (
       <Header style={styles(this.props.isNightMode).header}>
@@ -167,8 +172,8 @@ class Bookmark extends React.Component {
 
   starComponent() {
     const { stars, colored_stars } = this.state.item;
-    const starCount = stars.length || 0;
-    const colorStarCount = colored_stars.length || 0;
+    const starCount = this.validCount(stars);
+    const colorStarCount = this.validCount(colored_stars);
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;

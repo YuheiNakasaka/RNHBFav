@@ -35,6 +35,7 @@ class Comment extends React.Component {
 
   assignStarsToBookmarkInfo(info) {
     // generate bookmark comment uri
+    if (info === undefined) return;
     const query = info.bookmarks.map((bookmark) => {
       const bCommentUrl = encodeURIComponent(bookmarkCommentUrl(info.eid, bookmark.user, bookmark.timestamp));
       return `uri=${bCommentUrl}`;
