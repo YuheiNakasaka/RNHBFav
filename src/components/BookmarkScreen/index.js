@@ -57,16 +57,22 @@ class Bookmark extends React.Component {
     const { creator, userIcon } = this.state.item;
     if (userIcon !== undefined && creator !== undefined) {
       return (
-        <View style={styles(this.props.isNightMode).userBar}>
-          <View style={styles(this.props.isNightMode).userBarLeft}>
-            <Image style={styles(this.props.isNightMode).userIcon} source={{ uri: userIcon }} />
-          </View>
-          <View style={styles(this.props.isNightMode).userBarRight}>
-            <View style={styles(this.props.isNightMode).userBarRightInner}>
-              <Text style={styles(this.props.isNightMode).userBarRightInnerText}>{ creator }</Text>
+        <TouchableOpacity
+          onPress={() => {
+            Actions.userBookmark({ title: creator });
+          }}
+        >
+          <View style={styles(this.props.isNightMode).userBar}>
+            <View style={styles(this.props.isNightMode).userBarLeft}>
+              <Image style={styles(this.props.isNightMode).userIcon} source={{ uri: userIcon }} />
+            </View>
+            <View style={styles(this.props.isNightMode).userBarRight}>
+              <View style={styles(this.props.isNightMode).userBarRightInner}>
+                <Text style={styles(this.props.isNightMode).userBarRightInnerText}>{ creator }</Text>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       );
     }
     return null;

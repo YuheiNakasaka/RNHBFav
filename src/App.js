@@ -9,6 +9,7 @@ import Auth from './components/AuthScreen/index';
 import Menu from './components/MenuScreen/index';
 import Tour from './components/TourScreen/index';
 import Eula from './components/EulaScreen/index';
+import UserBookmark from './components/UserBookmarkScreen/index';
 
 const App = () => (
   <Router>
@@ -17,6 +18,7 @@ const App = () => (
         <Scene key="home" component={Root} initial />
         <Scene key="bookmark" component={Bookmark} />
         <Scene key="entry" component={Entry} />
+        <Scene key="userBookmark" component={UserBookmark} />
       </Scene>
       <Scene key="auth" component={Auth} hideNavBar panHandlers={null} />
       <Scene key="bookmarkComment" component={BookmarkComment} hideNavBar panHandlers={null} />
