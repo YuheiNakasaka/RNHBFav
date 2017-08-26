@@ -27,7 +27,12 @@ import { styles } from '../../assets/styles/bookmark_star/index';
 class BookmarkStar extends React.Component {
   itemComponent(star) {
     return (
-      <ListItem style={styles(this.props.isNightMode).bookmarkCommentListItem}>
+      <ListItem
+        onPress={() => {
+          Actions.userBookmark({ title: star.name });
+        }}
+        style={styles(this.props.isNightMode).bookmarkCommentListItem}
+      >
         <View style={styles(this.props.isNightMode).itemLeft}>
           <View style={styles(this.props.isNightMode).itemLeftInner}>
             <Image style={styles(this.props.isNightMode).profileIcon} source={{ uri: profileIcon(star.name) }} />

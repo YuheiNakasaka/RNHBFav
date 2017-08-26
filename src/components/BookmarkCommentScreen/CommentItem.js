@@ -89,7 +89,12 @@ class CommentItem extends React.Component {
 
   render() {
     return (
-      <ListItem style={styles(this.props.isNightMode).bookmarkCommentListItem}>
+      <ListItem
+        onPress={() => {
+          Actions.userBookmark({ title: this.props.item.user });
+        }}
+        style={styles(this.props.isNightMode).bookmarkCommentListItem}
+      >
         <View style={styles(this.props.isNightMode).itemLeft}>
           { this.thumbnailComponent() }
         </View>

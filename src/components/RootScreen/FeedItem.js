@@ -21,10 +21,19 @@ class FeedItem extends React.Component {
     };
   }
 
+  // まれにキャッシュかなにかの問題でstarの結果とbookmarkの結果の個数が違うことがあるので
+  // 確認を入念にする
+  validCount(item) {
+    if (item) {
+      return item.length;
+    }
+    return 0;
+  }
+
   starComponent() {
     const { stars, colored_stars } = this.state.item;
-    const starCount = stars.length || 0;
-    const colorStarCount = colored_stars.length || 0;
+    const starCount = this.validCount(stars);
+    const colorStarCount = this.validCount(colored_stars);
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;

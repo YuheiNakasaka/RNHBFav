@@ -49,7 +49,7 @@ function _assignStarInfoToItems(items) {
     return `uri=${bCommentUrl}`;
   });
 
-    // assign star info to each items
+  // assign star info to each items
   return getBookmarkStar(query).then(resp => items.map((item) => {
     resp.entries.map((entry) => {
       // ブコメページと違いTLは同一ユーザーもいるのでnameチェックではユニークにならない
