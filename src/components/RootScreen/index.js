@@ -20,7 +20,7 @@ import Feed from './Feed';
 import { saveAccessData, getAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
-import { profileIcon, itemObject } from '../../libs/utils';
+import { profileIcon, itemObject, alert } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
@@ -70,6 +70,8 @@ class Root extends React.Component {
       }).catch((e) => {
         console.log(e);
       });
+    } else {
+      alert('入力エラー', '正しいURLを入力してください');
     }
   }
 
@@ -131,13 +133,21 @@ class Root extends React.Component {
             onChangeText={(urlText) => {
               this.setState({ urlText });
             }}
+            value={this.state.urlText}
             onSubmitEditing={this.onSubmitEditingHandler.bind(this)}
+          />
+          <Icon
+            name="close-circle"
+            onPress={() => {
+              this.setState({ urlText: '' });
+            }}
           />
         </Item>
         <Button
           transparent
           onPress={() => {
             this.setState({ urlBoxOpen: false });
+            this.setState({ urlText: '' });
           }}
         >
           <Text style={styles(this.props.isNightMode).urlBoxButtonText}>キャンセル</Text>

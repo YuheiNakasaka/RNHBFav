@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, Text } from 'react-native';
+import { Linking, Text, StatusBar } from 'react-native';
 import {
   Container,
   Header,
@@ -195,6 +195,7 @@ class Entry extends Component {
   render() {
     return (
       <Container>
+        <StatusBar networkActivityIndicatorVisible={this.state.isLoading} />
         { this.headerComponent() }
         { this.webviewComponent() }
         { this.footerComponent() }
