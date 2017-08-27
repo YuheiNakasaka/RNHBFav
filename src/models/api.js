@@ -9,6 +9,7 @@ import { alert } from '../libs/utils';
 
 // Fetch star info separately and reccursively to avoid 414 URL TOO LONG ERROR.
 const eventEmitter = new EventEmitter();
+eventEmitter.setMaxListeners(0);
 let results = [];
 function _fetchStarReccursively(links, offset, limit) {
   if (offset > links.length) {
