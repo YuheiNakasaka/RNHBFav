@@ -4,6 +4,7 @@ const initialState = {
   user: {},
   items: [],
   feedType: 'timeline',
+  offset: 0,
   loading: false,
 };
 

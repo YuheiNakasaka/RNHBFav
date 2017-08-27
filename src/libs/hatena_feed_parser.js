@@ -41,6 +41,11 @@ export function feedItems(xml) {
       }
 
       const items = result['rdf:RDF'].item;
+      // 取得するitemがもう無い時は空のarray返す
+      if (items === undefined) {
+        return resolve([]);
+      }
+
       const res = items.map((item) => {
         try {
           const hash = {};
@@ -60,7 +65,7 @@ export function feedItems(xml) {
           return null;
         }
       }).filter(resp => resp !== null);
-      resolve(res);
+      return resolve(res);
     });
   });
 }

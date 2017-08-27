@@ -40,16 +40,16 @@ class Feed extends React.Component {
     let newOffset = 0;
     switch (this.props.feedType) {
       case 'myBookmark':
-        newOffset = this.state.offset + 20;
+        newOffset = this.props.offset + 20;
         this.fetchMyBookmarkFeed(this.state.user.url_name, newOffset).then(() => {
-          this.setState({ offset: newOffset, refreshing: false });
+          this.setState({ refreshing: false });
           this.updateLoading(false);
         });
         break;
       default:
-        newOffset = this.state.offset + 25;
+        newOffset = this.props.offset + 25;
         this.fetchFavoriteFeed(this.state.user.url_name, newOffset).then(() => {
-          this.setState({ offset: newOffset, refreshing: false });
+          this.setState({ refreshing: false });
           this.updateLoading(false);
         });
     }
@@ -69,7 +69,7 @@ class Feed extends React.Component {
     switch (this.props.feedType) {
       case 'myBookmark':
         this.fetchMyBookmarkFeed(this.state.user.url_name, 0).then(() => {
-          this.setState({ refreshing: false, offset: 0 });
+          this.setState({ refreshing: false });
           this.updateLoading(false);
         }).catch(() => {
           this.updateLoading(false);
@@ -77,7 +77,7 @@ class Feed extends React.Component {
         break;
       default:
         this.fetchFavoriteFeed(this.state.user.url_name, 0).then(() => {
-          this.setState({ refreshing: false, offset: 0 });
+          this.setState({ refreshing: false });
           this.updateLoading(false);
         }).catch(() => {
           this.updateLoading(false);
@@ -85,23 +85,30 @@ class Feed extends React.Component {
     }
   }
 
+  listComponent() {
+    if (this.props.items.length === 0) return null;
+    return (
+      <FlatList
+        style={styles(this.props.isNightMode).list}
+        keyExtractor={(item, i) => `${item.uid}_${i}`}
+        data={this.props.items}
+        extraData={this.props.items}
+        renderItem={({ item }) => (
+          <FeedItem item={item} />
+        )}
+        refreshing={this.state.refreshing}
+        onRefresh={this.onRefreshHandler.bind(this)}
+        onEndReached={this.onEndReachedHandler.bind(this)}
+        onEndReachedThreshold={0.5}
+      />
+    );
+  }
+
   render() {
     return (
       <View>
         { this.spinnerComponent() }
-        <FlatList
-          style={styles(this.props.isNightMode).list}
-          keyExtractor={(item, i) => `${item.uid}_${i}`}
-          data={this.props.items}
-          extraData={this.props.items}
-          renderItem={({ item }) => (
-            <FeedItem item={item} />
-          )}
-          refreshing={this.state.refreshing}
-          onRefresh={this.onRefreshHandler.bind(this)}
-          onEndReached={this.onEndReachedHandler.bind(this)}
-          onEndReachedThreshold={0.5}
-        />
+        { this.listComponent() }
       </View>
     );
   }
@@ -112,6 +119,7 @@ Feed.propTypes = {
   user: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
   feedType: PropTypes.string.isRequired,
+  offset: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
   fetchFavoriteFeed: PropTypes.func.isRequired,
   fetchMyBookmarkFeed: PropTypes.func.isRequired,
@@ -124,6 +132,7 @@ function mapStateToProps(state) {
     items: rootData.items,
     feedType: rootData.feedType,
     loading: rootData.loading,
+    offset: rootData.offset,
     isNightMode: styleData.isNightMode,
   };
 }

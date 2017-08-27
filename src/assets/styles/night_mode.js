@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 export const navColor = '#1B2737';
 export const baseColor = '#151E29';
 export const linkColor = '#1D8DEE';
@@ -43,6 +45,7 @@ export const nightModeStyle = {
   list: {
     backgroundColor: baseColor,
     borderBottomColor: dividerColor,
+    height: (Dimensions.get('window').height - 64),
   },
   listItem: {
     marginLeft: 0,
