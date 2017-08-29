@@ -48,7 +48,6 @@ class Root extends React.Component {
           this.updateUser(userData);
         }).catch(() => {
           console.log('no user data');
-          this.updateUser({});
           Actions.auth();
         });
 
@@ -185,6 +184,7 @@ class Root extends React.Component {
   }
 
   render() {
+    StatusBar.setBarStyle('light-content', true);
     return (
       <Container style={styles(this.props.isNightMode).container}>
         { this.headerComponent() }

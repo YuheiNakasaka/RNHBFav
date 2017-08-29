@@ -102,15 +102,13 @@ class OAuth {
     requestData.headers = this.oauth.toHeader(this.oauth.authorize(requestData, token));
     requestData.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
-    return fetch(requestData.url, {
+    // 少しテンポ置いたほうが気持ちいい
+    return sleep(2000).then(() => fetch(requestData.url, {
       method: requestData.method,
       headers: requestData.headers,
-    }).then((response) => {
-      sleep(2000);
-      return this._parseAccessTokenResponse(response._bodyText);
-    }).catch(() => {
+    }).then(response => this._parseAccessTokenResponse(response._bodyText)).catch(() => {
       console.log('Error Occured: getAccessToken');
-    });
+    }));
   }
 
   _setRequestTokens(text) {
@@ -128,7 +126,7 @@ class OAuth {
   _setOAuthVarifier(text) {
     const matched = text.match(/oauth_verifier=(.+)/);
     if (matched !== null) {
-      this.oauthVerifier = matched[1];
+      this.oauthVerifier = decodeURIComponent(matched[1]);
     }
   }
 
