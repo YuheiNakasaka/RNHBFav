@@ -47,7 +47,7 @@ class BookmarkComment extends React.Component {
           <Right />
         </Header>
         <Content style={styles(this.props.isNightMode).content}>
-          <Comment link={this.state.item.link} />
+          <Comment link={this.state.item.link} entryText={this.state.item.entry} />
         </Content>
       </Container>
     );

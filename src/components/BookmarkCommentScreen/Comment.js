@@ -17,6 +17,7 @@ class Comment extends React.Component {
     super(props);
     this.state = {
       link: this.props.link,
+      entryText: this.props.entryText,
       entry: null,
       isLoading: true,
     };
@@ -26,11 +27,6 @@ class Comment extends React.Component {
     fetchBookmarkInfo(this.state.link).then((info) => {
       this.assignStarsToBookmarkInfo(info);
     });
-  }
-
-  validCount(obj) {
-    if (obj === undefined) return 0;
-    return obj.length;
   }
 
   assignStarsToBookmarkInfo(info) {
@@ -46,8 +42,8 @@ class Comment extends React.Component {
       info.bookmarks.map((bookmark, i) => {
         stars.entries.map((entry) => {
           if (bookmark.user === entry.name) {
-            info.bookmarks[i].stars = this.validCount(entry.stars);
-            info.bookmarks[i].colored_stars = this.validCount(entry.colored_stars);
+            info.bookmarks[i].stars = entry.stars || [];
+            info.bookmarks[i].colored_stars = entry.colored_stars || [];
           }
         });
       });
@@ -62,8 +58,8 @@ class Comment extends React.Component {
     if (this.state.entry !== null) {
       // fetch top 10 starred bookmarks
       const bookmarks = this.state.entry.bookmarks
-        .filter(bm => bm.comment !== '' && (bm.stars + bm.colored_stars) > 0)
-        .sort((a, b) => (b.stars + b.colored_stars) - (a.stars + a.colored_stars))
+        .filter(bm => bm.comment !== '' && (bm.stars.length + bm.colored_stars.length) > 0)
+        .sort((a, b) => (b.stars.length + b.colored_stars.length) - (a.stars.length + a.colored_stars.length))
         .slice(0, 10);
 
       if (bookmarks.length === 0) return null;
@@ -76,7 +72,7 @@ class Comment extends React.Component {
             style={styles(this.props.isNightMode).list}
             data={bookmarks}
             renderItem={({ item }) => (
-              <CommentItem item={item} />
+              <CommentItem item={item} entry={this.state.entry} entryText={this.state.entryText} />
             )}
             keyExtractor={(item, index) => index}
           />
@@ -97,7 +93,7 @@ class Comment extends React.Component {
             style={styles(this.props.isNightMode).list}
             data={this.state.entry.bookmarks}
             renderItem={({ item }) => (
-              <CommentItem item={item} />
+              <CommentItem item={item} entry={this.state.entry} entryText={this.state.entryText} />
             )}
             keyExtractor={(item, index) => index}
           />
@@ -130,6 +126,7 @@ class Comment extends React.Component {
 Comment.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
+  entryText: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
