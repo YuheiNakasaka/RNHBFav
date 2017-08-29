@@ -84,15 +84,15 @@ class Auth extends Component {
             if (this.state.isAuthorizing === false) {
               this.setState({ isAuthorizing: true, isLoading: true });
               this.state.oauth.getAccessToken(event.url).then((res) => {
-                this.setState({ isLoading: false });
                 if (res && !res.oauth_problem) {
                   this.updateUser(res);
                   saveUserData(res).then(() => {
+                    this.setState({ isLoading: false });
                     Actions.pop();
                   });
                 } else {
+                  this.setState({ isLoading: false });
                   alert('認証エラー', 'はてなのAPI側の問題で認証エラーが発生しました。左上のボタンを押してから再度お試しください。');
-                  Actions.pop();
                 }
               });
             }

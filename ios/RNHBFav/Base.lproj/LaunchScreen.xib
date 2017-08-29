@@ -33,6 +33,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Icon-167" width="167" height="167"/>
+        <image name="Icon-167" width="83" height="83"/>
     </resources>
 </document>

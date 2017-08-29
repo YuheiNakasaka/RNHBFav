@@ -2,7 +2,7 @@ import MyOAuth from 'oauth-1.0a';
 import crypto from 'crypto-js';
 import Base64 from 'crypto-js/enc-base64';
 import qs from 'qs';
-import { alert } from './utils';
+import { sleep, alert } from './utils';
 
 class OAuth {
   constructor(options) {
@@ -105,7 +105,10 @@ class OAuth {
     return fetch(requestData.url, {
       method: requestData.method,
       headers: requestData.headers,
-    }).then(response => this._parseAccessTokenResponse(response._bodyText)).catch(() => {
+    }).then((response) => {
+      sleep(2000);
+      return this._parseAccessTokenResponse(response._bodyText);
+    }).catch(() => {
       console.log('Error Occured: getAccessToken');
     });
   }

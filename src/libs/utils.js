@@ -38,6 +38,10 @@ export function itemObject(response, url) {
   };
 }
 
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function alert(title = '', msg = '') {
   Alert.alert(
     title,
