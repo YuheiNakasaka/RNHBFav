@@ -1,4 +1,5 @@
 import { Dimensions } from 'react-native';
+import { mainColor } from '../constant';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -24,7 +25,7 @@ export const styles = {
   iconView: {
     position: 'absolute',
     top: (windowHeight / 2) - 60,
-    backgroundColor: '#00A5DE',
+    backgroundColor: mainColor,
   },
   icon: {
     fontSize: 120,
@@ -37,7 +38,7 @@ export const styles = {
     width: windowWidth,
   },
   metaBtnText: {
-    color: '#00A5DE',
+    color: mainColor,
     fontWeight: 'bold',
   },
   metaTermView: {
@@ -45,7 +46,7 @@ export const styles = {
     top: windowHeight - 75,
     alignItems: 'center',
     width: windowWidth,
-    backgroundColor: '#00A5DE',
+    backgroundColor: mainColor,
   },
   metaTermText: {
     color: '#fff',

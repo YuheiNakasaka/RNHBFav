@@ -1,4 +1,5 @@
 import { nightModeStyle } from '../night_mode';
+import { mainColor } from '../constant';
 
 export function styles(type = false) {
   if (type) {
@@ -10,7 +11,7 @@ export function styles(type = false) {
       backgroundColor: '#fff',
     },
     header: {
-      backgroundColor: '#00A5DE',
+      backgroundColor: mainColor,
     },
     headerTitle: {
       color: '#fff',

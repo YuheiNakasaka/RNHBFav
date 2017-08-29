@@ -1,6 +1,8 @@
+import { mainColor } from '../constant';
+
 export const styles = {
   header: {
-    backgroundColor: '#00A5DE',
+    backgroundColor: mainColor,
   },
   headerBackButtonText: {
     color: '#fff',
