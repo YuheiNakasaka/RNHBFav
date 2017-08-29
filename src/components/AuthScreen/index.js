@@ -17,6 +17,7 @@ import OAuth from '../../libs/oauth';
 import { saveUserData } from '../../models/userStorage';
 import { updateUser } from '../../actions/root';
 import { alert } from '../../libs/utils';
+import MySpinner from '../CommonComponent/Spinner';
 import { styles } from '../../assets/styles/auth/index';
 
 class Auth extends Component {
@@ -37,6 +38,8 @@ class Auth extends Component {
       oauth,
       authorizeUrl: null,
       webview: null,
+      isAuthorizing: false,
+      isLoading: false,
     };
 
     this.updateUser = this.props.updateUser;
@@ -75,29 +78,43 @@ class Auth extends Component {
         ref={(ref) => { this.state.webview = ref; }}
         source={{ uri: authorizeUrl }}
         onNavigationStateChange={(event) => {
-        // if user permit to access, try to get access token and save it to AsyncStorage
+          // if user permit to access, try to get access token and save it to AsyncStorage
           if (event.url.match(/oauth_verifier/)) {
-            this.state.oauth.getAccessToken(event.url).then((res) => {
-              if (res && !res.oauth_problem) {
-                this.updateUser(res);
-                saveUserData(res).then(() => {
-                  console.log('success to authorize');
+            // 何度もonNavigationStateChangeが発火してしまうので制御いれる
+            if (this.state.isAuthorizing === false) {
+              this.setState({ isAuthorizing: true, isLoading: true });
+              this.state.oauth.getAccessToken(event.url).then((res) => {
+                this.setState({ isLoading: false });
+                if (res && !res.oauth_problem) {
+                  this.updateUser(res);
+                  saveUserData(res).then(() => {
+                    Actions.pop();
+                  });
+                } else {
+                  alert('認証エラー', 'はてなのAPI側の問題で認証エラーが発生しました。左上のボタンを押してから再度お試しください。');
                   Actions.pop();
-                });
-              } else {
-                console.log('could not get access token');
-                alert('認証エラー', 'はてなのAPI側の問題で認証エラーが発生しました。左上の「閉じる」を押してから再度お試しください。');
-              }
-            });
+                }
+              });
+            }
           }
         }}
       />
     );
   }
 
+  spinnerComponent() {
+    if (this.state.isLoading) {
+      return (
+        <MySpinner isLoading={this.state.isLoading} />
+      );
+    }
+    return null;
+  }
+
   render() {
     return (
       <Container>
+        { this.spinnerComponent() }
         { this.headerComponent() }
         { this.webviewComponent() }
       </Container>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  StatusBar,
   TouchableWithoutFeedback,
   View,
   Text,
@@ -22,6 +23,7 @@ const SCREENSHOT_006 = require('../../assets/images/rnhbfav_screenshot_0006.jpg'
 
 class Tour extends Component {
   render() {
+    StatusBar.setBarStyle('light-content', true);
     return (
       <Swiper
         loop={false}

@@ -38,7 +38,11 @@ class Root extends React.Component {
 
     // 初回起動か否か
     getAccessData().then((res) => {
-      if (res.firstAccess === false) {
+      if (res.firstAccess !== false) {
+        saveAccessData({ firstAccess: false }).then(() => {
+          Actions.tour();
+        });
+      } else {
         // ユーザーデータをstateにロード
         getUserData().then((userData) => {
           this.updateUser(userData);
@@ -53,10 +57,6 @@ class Root extends React.Component {
           this.updateStyleType(resp.isNightMode);
         }).catch(() => {
           console.log('no style data');
-        });
-      } else {
-        saveAccessData({ firstAccess: false }).then(() => {
-          Actions.tour();
         });
       }
     });
@@ -185,7 +185,6 @@ class Root extends React.Component {
   }
 
   render() {
-    StatusBar.setBarStyle('light-content', true);
     return (
       <Container style={styles(this.props.isNightMode).container}>
         { this.headerComponent() }
