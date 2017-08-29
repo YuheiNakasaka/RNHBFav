@@ -32,6 +32,7 @@ class Root extends React.Component {
     this.state = {
       urlBoxOpen: false,
       urlText: '',
+      urlLoading: false,
     };
     this.updateUser = this.props.updateUser;
     this.updateStyleType = this.props.updateStyleType;
@@ -64,11 +65,11 @@ class Root extends React.Component {
   onSubmitEditingHandler() {
     const urlText = this.state.urlText;
     if (urlText.match(/^http[s]*:\/\/.+/)) {
-      fetchBookmarkInfo(urlText).then((resp) => {
-        Actions.entry({ item: itemObject(resp, urlText) });
-      }).catch((e) => {
-        console.log(e);
-      });
+      this.setState({ urlLoading: true });
+      fetchBookmarkInfo(urlText)
+        .then(resp => Actions.entry({ item: itemObject(resp, urlText) }))
+        .catch(() => alert('Network Error', 'ネット環境をご確認ください'))
+        .then(() => this.setState({ urlLoading: false }));
     } else {
       alert('入力エラー', '正しいURLを入力してください');
     }
@@ -187,6 +188,7 @@ class Root extends React.Component {
     StatusBar.setBarStyle('light-content', true);
     return (
       <Container style={styles(this.props.isNightMode).container}>
+        <StatusBar networkActivityIndicatorVisible={this.state.urlLoading} />
         { this.headerComponent() }
         { this.feedComponent() }
       </Container>

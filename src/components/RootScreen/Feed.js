@@ -25,6 +25,7 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
+    this.updateLoading(true);
     this.fetchLatestData();
   }
 
@@ -65,7 +66,6 @@ class Feed extends React.Component {
   }
 
   fetchLatestData() {
-    this.updateLoading(true);
     switch (this.props.feedType) {
       case 'myBookmark':
         this.fetchMyBookmarkFeed(this.state.user.url_name, 0).then(() => {
