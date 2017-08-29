@@ -19,7 +19,7 @@
                     <rect key="frame" x="120" y="176" width="240" height="128"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.64680939912796021" blue="0.87143403291702271" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.011561981402337551" green="0.51759582757949829" blue="0.8592415452003479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <color key="tintColor" red="0.0" green="0.64206673464027064" blue="0.87143403291702271" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Qqa-8z-PxH" secondAttribute="trailing" constant="120" id="FSC-h9-U47"/>

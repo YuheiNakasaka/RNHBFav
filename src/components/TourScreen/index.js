@@ -13,12 +13,12 @@ import Swiper from 'react-native-swiper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../../assets/styles/tour/index';
 
-const SCREENSHOT_001 = require('../../assets/images/rnhbfav_screenshot_001.jpg');
-const SCREENSHOT_002 = require('../../assets/images/rnhbfav_screenshot_002.jpg');
-const SCREENSHOT_003 = require('../../assets/images/rnhbfav_screenshot_003.jpg');
-const SCREENSHOT_004 = require('../../assets/images/rnhbfav_screenshot_004.jpg');
-const SCREENSHOT_005 = require('../../assets/images/rnhbfav_screenshot_005.jpg');
-const SCREENSHOT_006 = require('../../assets/images/rnhbfav_screenshot_006.jpg');
+const SCREENSHOT_001 = require('../../assets/images/rnhbfav_screenshot_0001.jpg');
+const SCREENSHOT_002 = require('../../assets/images/rnhbfav_screenshot_0002.jpg');
+const SCREENSHOT_003 = require('../../assets/images/rnhbfav_screenshot_0003.jpg');
+const SCREENSHOT_004 = require('../../assets/images/rnhbfav_screenshot_0004.jpg');
+const SCREENSHOT_005 = require('../../assets/images/rnhbfav_screenshot_0005.jpg');
+const SCREENSHOT_006 = require('../../assets/images/rnhbfav_screenshot_0006.jpg');
 
 class Tour extends Component {
   render() {
