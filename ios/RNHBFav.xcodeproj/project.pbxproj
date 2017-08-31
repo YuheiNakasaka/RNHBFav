@@ -53,6 +53,7 @@
 		99C578051F445DD800856D07 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 99C578041F445DD800856D07 /* main.jsbundle */; };
 		99E8F8431F51A57E00CDC305 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */; };
 		99E8F9671F55223400CDC305 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 99E8F9661F55223400CDC305 /* assets */; };
+		99E8F9AB1F57A25500CDC305 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E8F9A81F57A23700CDC305 /* libRCTPushNotification.a */; };
 		A73AD05DBA4A403CA9E22571 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C09A83FABAA54F2386F498FE /* Entypo.ttf */; };
 		ACD63887894C41F28BFABB66 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9063D56212024FDA94529312 /* EvilIcons.ttf */; };
 		B4970EC066C24EDB99E30423 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 060B58BD6D4C478D978C55FA /* MaterialIcons.ttf */; };
@@ -312,6 +313,20 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNShare;
 		};
+		99E8F9A71F57A23700CDC305 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99E8F9A21F57A23700CDC305 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		99E8F9A91F57A23700CDC305 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99E8F9A21F57A23700CDC305 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -357,6 +372,8 @@
 		99C578041F445DD800856D07 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		99E8F8421F51A57E00CDC305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = RNHBFav/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		99E8F9661F55223400CDC305 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		99E8F9981F57A13600CDC305 /* RNHBFav.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RNHBFav.entitlements; path = RNHBFav/RNHBFav.entitlements; sourceTree = "<group>"; };
+		99E8F9A21F57A23700CDC305 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		9B00FE4A2DF44075A8FF2283 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A1BDDBDA22DE4378B0166899 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		A72179F73B2E4C148800CB50 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
@@ -384,6 +401,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99E8F9AB1F57A25500CDC305 /* libRCTPushNotification.a in Frameworks */,
 				993AC07E1F4F0CF4006DD327 /* libRCTWKWebView.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -507,6 +525,7 @@
 		13B07FAE1A68108700A75B9A /* RNHBFav */ = {
 			isa = PBXGroup;
 			children = (
+				99E8F9981F57A13600CDC305 /* RNHBFav.entitlements */,
 				99C578041F445DD800856D07 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				99E8F8411F51A57E00CDC305 /* LaunchScreen.xib */,
@@ -588,6 +607,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				99E8F9A21F57A23700CDC305 /* RCTPushNotification.xcodeproj */,
 				993AC0581F4F0CCF006DD327 /* RCTWKWebView.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -668,6 +688,15 @@
 			isa = PBXGroup;
 			children = (
 				99C577E41F4454CA00856D07 /* libRNDeviceInfo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99E8F9A31F57A23700CDC305 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99E8F9A81F57A23700CDC305 /* libRCTPushNotification.a */,
+				99E8F9AA1F57A23700CDC305 /* libRCTPushNotification-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -764,6 +793,11 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = FL88LERKC5;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -811,6 +845,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 99E8F9A31F57A23700CDC305 /* Products */;
+					ProjectRef = 99E8F9A21F57A23700CDC305 /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1091,6 +1129,20 @@
 			remoteRef = 99C577E61F4454CA00856D07 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		99E8F9A81F57A23700CDC305 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = 99E8F9A71F57A23700CDC305 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99E8F9AA1F57A23700CDC305 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = 99E8F9A91F57A23700CDC305 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1311,6 +1363,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RNHBFav/RNHBFav.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YUHEI NAKASAKA (FL88LERKC5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1341,6 +1394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RNHBFav/RNHBFav.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: YUHEI NAKASAKA (FL88LERKC5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;

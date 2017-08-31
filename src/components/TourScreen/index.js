@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {
+  Platform,
   StatusBar,
+  PushNotificationIOS,
   TouchableWithoutFeedback,
   View,
   Text,
@@ -22,6 +24,15 @@ const SCREENSHOT_005 = require('../../assets/images/rnhbfav_screenshot_0005.jpg'
 const SCREENSHOT_006 = require('../../assets/images/rnhbfav_screenshot_0006.jpg');
 
 class Tour extends Component {
+  componentDidMount() {
+    if (Platform.OS === 'ios') {
+      // iOSはPushNotification使わないと審査通らないっぽい
+      PushNotificationIOS.checkPermissions(() => {
+        PushNotificationIOS.requestPermissions();
+      });
+    }
+  }
+
   render() {
     StatusBar.setBarStyle('light-content', true);
     return (
