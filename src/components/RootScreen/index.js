@@ -1,5 +1,11 @@
 import React from 'react';
-import { Image, Text, StatusBar } from 'react-native';
+import {
+  AppState,
+  StatusBar,
+  Clipboard,
+  Image,
+  Text,
+} from 'react-native';
 import {
   Container,
   Header,
@@ -17,10 +23,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feed from './Feed';
+import MessageBar from '../CommonComponent/MessageBar';
 import { saveAccessData, getAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
-import { profileIcon, itemObject, alert } from '../../libs/utils';
+import { saveUrlData, getUrlData } from '../../models/urlStorage';
+import { profileIcon, itemObject, truncate, isUrl, alert } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
@@ -30,9 +38,14 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // bookmark with url in input
       urlBoxOpen: false,
       urlText: '',
       urlLoading: false,
+      // bookmark with url in clipboard
+      clipboardText: '',
+      showMessageBar: false,
+      appState: AppState.currentState,
     };
     this.updateUser = this.props.updateUser;
     this.updateStyleType = this.props.updateStyleType;
@@ -62,9 +75,19 @@ class Root extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.showBookmarkNoticeFromClipboard();
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+  }
+
+  // urlかどうか確かめてurlならwebviewでページに飛ばす
   onSubmitEditingHandler() {
-    const urlText = this.state.urlText;
-    if (urlText.match(/^http[s]*:\/\/.+/)) {
+    const urlText = this.state.urlText || this.state.clipboardText;
+    if (isUrl(urlText)) {
       this.setState({ urlLoading: true });
       fetchBookmarkInfo(urlText)
         .then(resp => Actions.entry({ item: itemObject(resp, urlText) }))
@@ -73,6 +96,43 @@ class Root extends React.Component {
     } else {
       alert('入力エラー', '正しいURLを入力してください');
     }
+  }
+
+  // URLを検知してブックマークを促す
+  showBookmarkNoticeFromClipboard() {
+    Clipboard.getString().then((text) => {
+      // urlじゃないならMessageBarを出さない
+      if (isUrl(text)) {
+        getUrlData().then((urls) => {
+          // urlキャッシュが無い === 新しいurlの場合
+          if (urls.indexOf(text) === -1) {
+            // urlキャッシュに新たにurlを追加して再度保存
+            console.log('Save additional url');
+            urls.push(text);
+            saveUrlData(urls).then(() => {
+              this.setState({ showMessageBar: true, clipboardText: text });
+            });
+          } else {
+            console.log('Already Cached');
+            this.setState({ showMessageBar: false });
+          }
+        }).catch((e) => {
+          // 初期値 or Expiredしてデータが無い時
+          console.log(e);
+          saveUrlData([text]).then(() => {
+            this.setState({ showMessageBar: true, clipboardText: text });
+          });
+        });
+      }
+    });
+  }
+
+  // アプリ起動ごとにClipboardのテキストをチェック
+  handleAppStateChange(nextAppState) {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      this.showBookmarkNoticeFromClipboard();
+    }
+    this.setState({ appState: nextAppState });
   }
 
   userPresent() {
@@ -189,6 +249,11 @@ class Root extends React.Component {
     return (
       <Container style={styles(this.props.isNightMode).container}>
         <StatusBar networkActivityIndicatorVisible={this.state.urlLoading} />
+        <MessageBar
+          show={this.state.showMessageBar}
+          text={truncate(this.state.clipboardText, 50)}
+          onPress={this.onSubmitEditingHandler.bind(this)}
+        />
         { this.headerComponent() }
         { this.feedComponent() }
       </Container>

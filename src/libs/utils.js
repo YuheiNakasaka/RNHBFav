@@ -15,10 +15,14 @@ export function readableDate(date) {
   return relativeTime;
 }
 
-export function truncate(title) {
+export function truncate(title, pos = 10) {
   if (title === undefined) return '';
-  if (title.length < 10) return title;
-  return `${title.slice(0, 10)}...`;
+  if (title.length < pos) return title;
+  return `${title.slice(0, pos)}...`;
+}
+
+export function isUrl(text) {
+  return text.match(/^http[s]*:\/\/.+/);
 }
 
 // match interface with rss response
