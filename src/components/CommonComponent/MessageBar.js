@@ -21,13 +21,13 @@ class MessageBar extends Component {
       // MessageBar style
       durationToShow: this.props.duration || 350,
       durationToHide: this.props.duration || 350,
-      fontSize: this.props.fontSize || 11,
+      fontSize: this.props.fontSize || 12,
       textColor: this.props.textColor || '#000000',
       backgroundColor: this.props.backgroundColor || '#ffffff',
       paddingLeft: this.props.paddingLeft || 5,
       paddingRight: this.props.paddingRight || 5,
-      paddingTop: this.props.paddingTop || 5,
-      paddingBottom: this.props.paddingBottom || 5,
+      paddingTop: this.props.paddingTop || 7,
+      paddingBottom: this.props.paddingBottom || 7,
     };
 
     this.animatedValue = new Animated.Value(0);

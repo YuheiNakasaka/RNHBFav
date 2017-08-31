@@ -2,7 +2,7 @@ import { Dimensions } from 'react-native';
 
 export const navColor = '#1B2737';
 export const baseColor = '#151E29';
-export const linkColor = '#1D8DEE';
+export const linkColor = '#219BFF';
 export const textColor = '#ffffff';
 export const grayColor = '#677483';
 export const dividerColor = '#000000';
@@ -45,7 +45,6 @@ export const nightModeStyle = {
   list: {
     backgroundColor: baseColor,
     borderBottomColor: dividerColor,
-    height: (Dimensions.get('window').height - 64),
   },
   listItem: {
     marginLeft: 0,
@@ -61,6 +60,11 @@ export const nightModeStyle = {
   },
 
   // root
+  feedList: {
+    backgroundColor: baseColor,
+    borderBottomColor: dividerColor,
+    height: (Dimensions.get('window').height - 64),
+  },
   feedListItem: {
     marginLeft: 0,
     paddingLeft: 15,

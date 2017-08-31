@@ -89,7 +89,7 @@ class Feed extends React.Component {
     if (this.props.items.length === 0) return null;
     return (
       <FlatList
-        style={styles(this.props.isNightMode).list}
+        style={styles(this.props.isNightMode).feedList}
         keyExtractor={(item, i) => `${item.uid}_${i}`}
         data={this.props.items}
         extraData={this.props.items}
