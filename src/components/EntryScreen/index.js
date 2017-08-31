@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, Text, StatusBar } from 'react-native';
+import { Linking, Text, StatusBar, View } from 'react-native';
 import {
   Container,
   Header,
@@ -180,6 +180,17 @@ class Entry extends Component {
 
   bookmarkCountButtonComponent() {
     const { bookmarkCount } = this.state.item;
+    if (bookmarkCount === 0) {
+      return (
+        <Button
+          transparent
+          disabled
+          style={styles(this.props.isNightMode).footerBackButton}
+        >
+          <Text style={styles(this.props.isNightMode).bookmarkCountText}>{ bookmarkCount } users</Text>
+        </Button>
+      );
+    }
     return (
       <Button
         transparent

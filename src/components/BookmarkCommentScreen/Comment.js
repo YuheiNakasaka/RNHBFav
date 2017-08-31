@@ -31,7 +31,7 @@ class Comment extends React.Component {
 
   assignStarsToBookmarkInfo(info) {
     // generate bookmark comment uri
-    if (info === undefined) return;
+    if (info === null || info.bookmarks === null) return;
     const query = info.bookmarks.map((bookmark) => {
       const bCommentUrl = encodeURIComponent(bookmarkCommentUrl(info.eid, bookmark.user, bookmark.timestamp));
       return `uri=${bCommentUrl}`;
@@ -123,10 +123,14 @@ class Comment extends React.Component {
   }
 }
 
+Comment.defaultProps = {
+  entryText: '',
+};
+
 Comment.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
-  entryText: PropTypes.string.isRequired,
+  entryText: PropTypes.string,
 };
 
 function mapStateToProps(state) {

@@ -135,6 +135,8 @@ CommentItem.defaultProps = {
 CommentItem.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
+  entry: PropTypes.object,
+  entryText: PropTypes.string,
 };
 
 function mapStateToProps(state) {

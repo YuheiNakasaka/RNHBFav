@@ -244,16 +244,31 @@ class Root extends React.Component {
     return null;
   }
 
+  messageBarComponent() {
+    if (this.state.showMessageBar) {
+      return (
+        <MessageBar
+          show={this.state.showMessageBar}
+          text={truncate(this.state.clipboardText, 70)}
+          onPress={this.onSubmitEditingHandler.bind(this)}
+          onHide={() => {
+            this.setState({ showMessageBar: false });
+          }}
+          backgroundColor="#0086d9"
+          textColor="#fff"
+        />
+      );
+    }
+    return null;
+  }
+
   render() {
+    // status barの色は白。ここで設定すればあとは全部白になる
     StatusBar.setBarStyle('light-content', true);
     return (
       <Container style={styles(this.props.isNightMode).container}>
         <StatusBar networkActivityIndicatorVisible={this.state.urlLoading} />
-        <MessageBar
-          show={this.state.showMessageBar}
-          text={truncate(this.state.clipboardText, 50)}
-          onPress={this.onSubmitEditingHandler.bind(this)}
-        />
+        { this.messageBarComponent() }
         { this.headerComponent() }
         { this.feedComponent() }
       </Container>
