@@ -21,8 +21,6 @@ class CommentItem extends React.Component {
     super(props);
     this.state = {
       item: this.props.item,
-      entry: this.props.entry,
-      entryText: this.props.entryText,
     };
   }
 
@@ -101,15 +99,15 @@ class CommentItem extends React.Component {
           // bookmark詳細で必要なデータ
           // TODO: 綺麗にしたい
           const itemData = {
-            title: this.state.entry.title,
+            title: this.props.entry.title,
             description: this.state.item.comment,
             creator: this.state.item.user,
             userIcon: profileIcon(this.state.item.user),
-            link: this.state.entry.url,
-            entry: this.state.entryText,
-            entryImage: this.state.entry.screenshot,
+            link: this.props.entry.url,
+            entry: this.props.entryText,
+            entryImage: this.props.entry.screenshot,
             date: readableDate(this.state.item.timestamp),
-            bookmarkCount: this.state.entry.count,
+            bookmarkCount: this.props.entry.count,
             stars: this.state.item.stars,
             colored_stars: this.state.item.colored_stars,
           };
@@ -129,11 +127,14 @@ class CommentItem extends React.Component {
   }
 }
 
+CommentItem.defaultProps = {
+  entry: {},
+  entryText: '',
+};
+
 CommentItem.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
-  entry: PropTypes.object.isRequired,
-  entryText: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
