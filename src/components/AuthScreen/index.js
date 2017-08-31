@@ -17,7 +17,7 @@ import OAuth from '../../libs/oauth';
 import { saveUserData } from '../../models/userStorage';
 import { updateUser } from '../../actions/root';
 import { alert } from '../../libs/utils';
-import MySpinner from '../CommonComponent/Spinner';
+import FullOverlaySpinner from '../CommonComponent/FullOverlaySpinner';
 import { styles } from '../../assets/styles/auth/index';
 
 class Auth extends Component {
@@ -105,7 +105,7 @@ class Auth extends Component {
   spinnerComponent() {
     if (this.state.isLoading) {
       return (
-        <MySpinner isLoading={this.state.isLoading} />
+        <FullOverlaySpinner isLoading={this.state.isLoading} />
       );
     }
     return null;

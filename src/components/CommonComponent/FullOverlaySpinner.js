@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Modal } from 'react-native';
 import { Spinner } from 'native-base';
-
-const windowHeight = Dimensions.get('window').height;
+import PropTypes from 'prop-types';
 
 class MySpinner extends Component {
   render() {
     return (
-      <View
-        style={{
-          height: windowHeight - 64,
-        }}
+      <Modal
+        transparent
+        visible={this.props.isLoading}
       >
         <View
           style={{
@@ -21,9 +19,13 @@ class MySpinner extends Component {
         >
           <Spinner color="#aaa" />
         </View>
-      </View>
+      </Modal>
     );
   }
 }
+
+MySpinner.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+};
 
 export default MySpinner;
