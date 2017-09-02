@@ -1,17 +1,11 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image, FlatList } from 'react-native';
 import {
   Container,
   Header,
   Left,
   Body,
   Right,
-  Content,
   Title,
   Button,
   ListItem,
@@ -22,9 +16,10 @@ import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { profileIcon } from '../../libs/utils';
+
 import { styles } from '../../assets/styles/bookmark_star/index';
 
-class BookmarkStar extends React.Component {
+class BookmarkStar extends Component {
   itemComponent(star) {
     return (
       <ListItem
@@ -95,11 +90,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(BookmarkStar);
