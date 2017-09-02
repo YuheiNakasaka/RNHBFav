@@ -1,12 +1,11 @@
 import React from 'react';
-import {
-  View,
-  FlatList,
-} from 'react-native';
+import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FeedItem from './FeedItem';
+
 import { fetchFavoriteFeed, fetchMyBookmarkFeed, updateLoading } from '../../actions/root';
+
+import FeedItem from './FeedItem';
 import MySpinner from '../CommonComponent/Spinner';
 
 import { styles } from '../../assets/styles/root/feed';
@@ -15,7 +14,6 @@ class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user,
       offset: 0,
       refreshing: false,
     };
@@ -42,14 +40,14 @@ class Feed extends React.Component {
     switch (this.props.feedType) {
       case 'myBookmark':
         newOffset = this.props.offset + 20;
-        this.fetchMyBookmarkFeed(this.state.user.url_name, newOffset).then(() => {
+        this.fetchMyBookmarkFeed(this.props.user.url_name, newOffset).then(() => {
           this.setState({ refreshing: false });
           this.updateLoading(false);
         });
         break;
       default:
         newOffset = this.props.offset + 25;
-        this.fetchFavoriteFeed(this.state.user.url_name, newOffset).then(() => {
+        this.fetchFavoriteFeed(this.props.user.url_name, newOffset).then(() => {
           this.setState({ refreshing: false });
           this.updateLoading(false);
         });
@@ -68,7 +66,7 @@ class Feed extends React.Component {
   fetchLatestData() {
     switch (this.props.feedType) {
       case 'myBookmark':
-        this.fetchMyBookmarkFeed(this.state.user.url_name, 0).then(() => {
+        this.fetchMyBookmarkFeed(this.props.user.url_name, 0).then(() => {
           this.setState({ refreshing: false });
           this.updateLoading(false);
         }).catch(() => {
@@ -76,7 +74,7 @@ class Feed extends React.Component {
         });
         break;
       default:
-        this.fetchFavoriteFeed(this.state.user.url_name, 0).then(() => {
+        this.fetchFavoriteFeed(this.props.user.url_name, 0).then(() => {
           this.setState({ refreshing: false });
           this.updateLoading(false);
         }).catch(() => {

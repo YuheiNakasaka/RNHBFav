@@ -1,23 +1,21 @@
-import React from 'react';
-import {
-  View,
-  FlatList,
-} from 'react-native';
+import React, { Component } from 'react';
+import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FeedItem from './FeedItem';
+
 import { updateLoading } from '../../actions/root';
 import { fetchMyBookmarks } from '../../models/api';
+
+import FeedItem from './FeedItem';
 import MySpinner from '../CommonComponent/Spinner';
 
 import { styles } from '../../assets/styles/user_bookmark/feed';
 
-class Feed extends React.Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      userName: this.props.userName,
       offset: 0,
       refreshing: false,
     };

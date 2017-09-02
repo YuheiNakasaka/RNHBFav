@@ -22,16 +22,19 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Feed from './Feed';
-import MessageBar from '../CommonComponent/MessageBar';
+
 import { saveAccessData, getAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
 import { saveUrlData, getUrlData } from '../../models/urlStorage';
-import { profileIcon, itemObject, truncate, isUrl, alert } from '../../libs/utils';
+import { profileIcon, entryObject, truncate, isUrl, alert } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
+
+import Feed from './Feed';
+import MessageBar from '../CommonComponent/MessageBar';
+
 import { styles } from '../../assets/styles/root/index';
 
 class Root extends React.Component {
@@ -90,7 +93,7 @@ class Root extends React.Component {
     if (isUrl(urlText)) {
       this.setState({ urlLoading: true });
       fetchBookmarkInfo(urlText)
-        .then(resp => Actions.entry({ item: itemObject(resp, urlText) }))
+        .then(resp => Actions.entry({ item: entryObject(resp, urlText) }))
         .catch(() => alert('Network Error', 'ネット環境をご確認ください'))
         .then(() => this.setState({ urlLoading: false }));
     } else {

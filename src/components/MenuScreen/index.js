@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Container,
   Header,
@@ -19,17 +19,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DeviceInfo from 'react-native-device-info';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { fetchMyBookmarkFeed, fetchFavoriteFeed, updateUser, updateLoading } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
 import { deleteUserData } from '../../models/userStorage';
+
 import { styles } from '../../assets/styles/menu/index';
 
-class Menu extends React.Component {
+class Menu extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userName: this.props.userName,
-    };
     this.fetchFavoriteFeed = this.props.fetchFavoriteFeed;
     this.fetchMyBookmarkFeed = this.props.fetchMyBookmarkFeed;
     this.updateUser = this.props.updateUser;
@@ -64,7 +63,7 @@ class Menu extends React.Component {
           <Left />
           <Body>
             <Title style={styles(this.props.isNightMode).headerTitle}>
-              id: { this.state.userName }
+              id: { this.props.userName }
             </Title>
           </Body>
           <Right>
@@ -84,7 +83,7 @@ class Menu extends React.Component {
             <ListItem
               onPress={() => {
                 this.updateLoading(true);
-                this.fetchFavoriteFeed(this.state.userName, 0);
+                this.fetchFavoriteFeed(this.props.userName, 0);
                 Actions.pop();
               }}
               style={styles(this.props.isNightMode).listItem}
@@ -99,7 +98,7 @@ class Menu extends React.Component {
             <ListItem
               onPress={() => {
                 this.updateLoading(true);
-                this.fetchMyBookmarkFeed(this.state.userName, 0);
+                this.fetchMyBookmarkFeed(this.props.userName, 0);
                 Actions.pop();
               }}
               style={styles(this.props.isNightMode).listItem}

@@ -12,12 +12,15 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WKWebView from 'react-native-wkwebview-reborn';
+
 import { CONSUMER_KEY, CONSUMER_SECRET } from '../../constants/config';
 import OAuth from '../../libs/oauth';
 import { saveUserData } from '../../models/userStorage';
 import { updateUser } from '../../actions/root';
 import { alert } from '../../libs/utils';
+
 import FullOverlaySpinner from '../CommonComponent/FullOverlaySpinner';
+
 import { styles } from '../../assets/styles/auth/index';
 
 class Auth extends Component {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -22,24 +22,14 @@ import { Actions } from 'react-native-router-flux';
 import Share from 'react-native-share';
 import Hyperlink from 'react-native-hyperlink';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { fetchBookmarkInfo } from '../../models/api';
-import { itemObject } from '../../libs/utils';
+import { entryObject, validCount } from '../../libs/utils';
+
 import { styles } from '../../assets/styles/bookmark/index';
 
 
-class Bookmark extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: this.props.item,
-    };
-  }
-
-  validCount(obj) {
-    if (obj === undefined) return 0;
-    return obj.length;
-  }
-
+class Bookmark extends Component {
   headerComponent() {
     return (
       <Header style={styles(this.props.isNightMode).header}>
@@ -62,12 +52,12 @@ class Bookmark extends React.Component {
   }
 
   userBarComponent() {
-    const { creator, userIcon } = this.state.item;
-    if (userIcon !== undefined && creator !== undefined) {
+    const { userName, userIcon } = this.props.item;
+    if (userIcon !== undefined && userName !== undefined) {
       return (
         <TouchableOpacity
           onPress={() => {
-            Actions.userBookmark({ title: creator });
+            Actions.userBookmark({ title: userName });
           }}
         >
           <View style={styles(this.props.isNightMode).userBar}>
@@ -76,7 +66,7 @@ class Bookmark extends React.Component {
             </View>
             <View style={styles(this.props.isNightMode).userBarRight}>
               <View style={styles(this.props.isNightMode).userBarRightInner}>
-                <Text style={styles(this.props.isNightMode).userBarRightInnerText}>{ creator }</Text>
+                <Text style={styles(this.props.isNightMode).userBarRightInnerText}>{ userName }</Text>
               </View>
             </View>
           </View>
@@ -87,7 +77,7 @@ class Bookmark extends React.Component {
   }
 
   descriptionComponent() {
-    const { description } = this.state.item;
+    const { description } = this.props.item;
     if (description !== '') {
       return (
         <View style={styles(this.props.isNightMode).description}>
@@ -95,7 +85,7 @@ class Bookmark extends React.Component {
             linkStyle={styles(this.props.isNightMode).descriptionLink}
             onPress={(urlText) => {
               fetchBookmarkInfo(urlText).then((resp) => {
-                Actions.entry({ item: itemObject(resp, urlText) });
+                Actions.entry({ item: entryObject(resp, urlText) });
               }).catch((e) => {
                 console.log(e);
               });
@@ -110,7 +100,7 @@ class Bookmark extends React.Component {
   }
 
   titleComponent() {
-    const { title } = this.state.item;
+    const { title } = this.props.item;
     if (title !== undefined) {
       return (
         <View>
@@ -122,7 +112,7 @@ class Bookmark extends React.Component {
   }
 
   entryComponent() {
-    const { entry, entryImage } = this.state.item;
+    const { entry, entryImage } = this.props.item;
     let entryImageComponent = null;
     if (entryImage !== undefined) {
       entryImageComponent = (
@@ -147,7 +137,7 @@ class Bookmark extends React.Component {
   }
 
   linkComponent() {
-    const { link } = this.state.item;
+    const { link } = this.props.item;
     if (link !== '') {
       return (
         <View style={styles(this.props.isNightMode).entryLink}>
@@ -159,7 +149,7 @@ class Bookmark extends React.Component {
   }
 
   dateComponent() {
-    const { date } = this.state.item;
+    const { date } = this.props.item;
     if (date !== '') {
       return (
         <View style={styles(this.props.isNightMode).entryDate}>
@@ -171,9 +161,9 @@ class Bookmark extends React.Component {
   }
 
   starComponent() {
-    const { stars, colored_stars } = this.state.item;
-    const starCount = this.validCount(stars);
-    const colorStarCount = this.validCount(colored_stars);
+    const { stars, colored_stars } = this.props.item;
+    const starCount = validCount(stars);
+    const colorStarCount = validCount(colored_stars);
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;
@@ -183,7 +173,7 @@ class Bookmark extends React.Component {
         style={styles(this.props.isNightMode).entryStars}
         activeOpacity={0.9}
         onPress={() => {
-          Actions.bookmarkStar({ item: this.state.item });
+          Actions.bookmarkStar({ item: this.props.item });
         }}
       >
         <MaterialIcon name="star" style={styles(this.props.isNightMode).entryStarsIcon} />
@@ -198,7 +188,7 @@ class Bookmark extends React.Component {
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={() => {
-            Actions.entry({ item: this.state.item });
+            Actions.entry({ item: this.props.item });
           }}
         >
           { this.titleComponent() }
@@ -214,14 +204,14 @@ class Bookmark extends React.Component {
   }
 
   bookmarkCountComponent() {
-    const { bookmarkCount } = this.state.item;
+    const { bookmarkCount } = this.props.item;
     if (bookmarkCount !== '') {
       return (
         <View style={styles(this.props.isNightMode).bookmarkCount}>
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
-              Actions.bookmarkComment({ item: this.state.item });
+              Actions.bookmarkComment({ item: this.props.item });
             }}
           >
             <Text style={styles(this.props.isNightMode).bookmarkCountText}>{ bookmarkCount } users</Text>
@@ -239,7 +229,7 @@ class Bookmark extends React.Component {
           <Button
             transparent
             onPress={() => {
-              Actions.bookmarkEdit({ item: this.state.item });
+              Actions.bookmarkEdit({ item: this.props.item });
             }}
           >
             <MaterialIcon name="pencil-box-outline" style={styles(this.props.isNightMode).footerBookmarkButtonIcon} />
@@ -248,7 +238,7 @@ class Bookmark extends React.Component {
         <Button
           transparent
           onPress={() => {
-            Share.open({ url: this.state.item.link }).catch((err) => { console.log(err); });
+            Share.open({ url: this.props.item.link }).catch((err) => { console.log(err); });
           }}
         >
           <MaterialIcon name="share-variant" style={styles(this.props.isNightMode).footerShareButtonIcon} />
@@ -285,11 +275,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Bookmark);

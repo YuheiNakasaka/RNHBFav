@@ -1,38 +1,22 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-} from 'react-native';
-import {
-  ListItem,
-} from 'native-base';
+import React, { Component } from 'react';
+import { View, Text, Image } from 'react-native';
+import { ListItem } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Hyperlink from 'react-native-hyperlink';
+
 import { fetchBookmarkInfo } from '../../models/api';
-import { itemObject } from '../../libs/utils';
+import { entryObject, validCount } from '../../libs/utils';
+
 import { styles } from '../../assets/styles/user_bookmark/feed_item';
 
-class FeedItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: this.props.item,
-    };
-  }
-
-  validCount(obj) {
-    if (obj === undefined) return 0;
-    return obj.length;
-  }
-
+class FeedItem extends Component {
   starComponent() {
-    const { stars, colored_stars } = this.state.item;
-    const starCount = this.validCount(stars);
-    const colorStarCount = this.validCount(colored_stars);
+    const { stars, colored_stars } = this.props.item;
+    const starCount = validCount(stars);
+    const colorStarCount = validCount(colored_stars);
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;
@@ -52,7 +36,7 @@ class FeedItem extends React.Component {
           linkStyle={styles(this.props.isNightMode).descriptionLink}
           onPress={(urlText) => {
             fetchBookmarkInfo(urlText).then((resp) => {
-              Actions.modalEntry({ item: itemObject(resp, urlText) });
+              Actions.modalEntry({ item: entryObject(resp, urlText) });
             }).catch((e) => {
               console.log(e);
             });
@@ -66,12 +50,12 @@ class FeedItem extends React.Component {
   }
 
   render() {
-    const { title, description, creator, userIcon, date } = this.state.item;
+    const { title, description, userName, userIcon, date } = this.props.item;
     return (
       <ListItem
         transparent
         onPress={() => {
-          Actions.bookmark({ item: this.state.item });
+          Actions.bookmark({ item: this.props.item });
         }}
         style={styles(this.props.isNightMode).feedListItem}
       >
@@ -83,7 +67,7 @@ class FeedItem extends React.Component {
         <View style={styles(this.props.isNightMode).right}>
           <View style={styles(this.props.isNightMode).rightTop}>
             <View style={styles(this.props.isNightMode).rightTopUserName}>
-              <Text style={styles(this.props.isNightMode).rightTopUserNameText}>{ creator }</Text>
+              <Text style={styles(this.props.isNightMode).rightTopUserNameText}>{ userName }</Text>
               { this.starComponent() }
             </View>
             <View style={styles(this.props.isNightMode).rightTopCreatedAt}>
@@ -110,11 +94,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(FeedItem);

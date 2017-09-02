@@ -1,9 +1,5 @@
-import React from 'react';
-import {
-  Dimensions,
-  Keyboard,
-  Text,
-} from 'react-native';
+import React, { Component } from 'react';
+import { Dimensions, Keyboard, Text } from 'react-native';
 import {
   Container,
   Content,
@@ -19,17 +15,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { fetchMyBookmark, postMyBookmark, deleteMyBookmark } from '../../models/api';
 import { truncate, alert } from '../../libs/utils';
+
 import MySpinner from '../CommonComponent/Spinner';
+
 import { styles, grayColor } from '../../assets/styles/bookmark_edit/index';
 
-
-class BookmarkEdit extends React.Component {
+class BookmarkEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: this.props.item,
       bookmarkTargetUrl: (this.props.item.link || this.props.link),
       autoFocus: false,
       isBookmarked: true,
@@ -94,7 +91,7 @@ class BookmarkEdit extends React.Component {
   }
 
   headerComponent() {
-    if (this.state.item === null) return null;
+    if (this.props.item === null) return null;
     return (
       <Header style={styles(this.props.isNightMode).header}>
         <Left>
@@ -108,7 +105,7 @@ class BookmarkEdit extends React.Component {
           </Button>
         </Left>
         <Body>
-          <Text style={styles(this.props.isNightMode).headerBodyText}>{ truncate(this.state.item.title) }</Text>
+          <Text style={styles(this.props.isNightMode).headerBodyText}>{ truncate(this.props.item.title) }</Text>
         </Body>
         { this.crudButtonComponent() }
       </Header>
@@ -248,11 +245,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(BookmarkEdit);
