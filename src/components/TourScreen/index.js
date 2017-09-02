@@ -14,6 +14,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Swiper from 'react-native-swiper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { styles } from '../../assets/styles/tour/index';
 
 const SCREENSHOT_001 = require('../../assets/images/rnhbfav_screenshot_0001.jpg');

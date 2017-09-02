@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, Text, StatusBar, View } from 'react-native';
+import { Linking, Text, StatusBar } from 'react-native';
 import {
   Container,
   Header,
@@ -17,10 +17,11 @@ import { connect } from 'react-redux';
 import Share from 'react-native-share';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WKWebView from 'react-native-wkwebview-reborn';
+
 import { fetchBookmarkInfo } from '../../models/api';
 import { entryObject } from '../../libs/utils';
-import { styles } from '../../assets/styles/entry/index';
 
+import { styles } from '../../assets/styles/entry/index';
 
 class Entry extends Component {
   constructor(props) {
@@ -227,11 +228,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Entry);
