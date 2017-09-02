@@ -173,7 +173,7 @@ export function fetchNewEntry(category) {
 }
 
 // get bookmark info
-export function fetchBookmarkInfo(url) {
+export function fetchBookmarkInfo(url, lightResp = false) {
   return getUserData().then((res) => {
     const { oauth_token, oauth_token_secret } = res;
     const oauth = new OAuth({
@@ -187,7 +187,10 @@ export function fetchBookmarkInfo(url) {
       oauth_token,
       oauth_token_secret,
       { url },
-    ).then(resp => bookmarkRest(resp)).then(items => _assignStarsToBookmarkInfo(items)).catch((e) => {
+    ).then(resp => bookmarkRest(resp)).then((items) => {
+      if (lightResp === true) return items;
+      return _assignStarsToBookmarkInfo(items);
+    }).catch((e) => {
       console.log(e);
     });
   });

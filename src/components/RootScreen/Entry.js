@@ -21,10 +21,6 @@ class Entry extends React.Component {
     this.updateLoading = this.props.updateLoading;
   }
 
-  componentDidMount() {
-    this.updateLoading(true);
-  }
-
   onRefreshHandler() {
     if (this.state.refreshing === true || this.props.loading === true) return;
     this.setState({ refreshing: true });

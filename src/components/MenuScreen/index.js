@@ -205,6 +205,7 @@ Menu.propTypes = {
   userName: PropTypes.string.isRequired,
   fetchFavoriteFeed: PropTypes.func.isRequired,
   fetchMyBookmarkFeed: PropTypes.func.isRequired,
+  fetchHotEntryFeed: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
   updateLoading: PropTypes.func.isRequired,
   updateStyleType: PropTypes.func.isRequired,

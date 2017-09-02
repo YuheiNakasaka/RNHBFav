@@ -10,7 +10,10 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { entryObject } from '../../libs/utils';
+import { fetchBookmarkInfo } from '../../models/api';
+
 import { styles } from '../../assets/styles/root/entry_item';
 
 class EntryItem extends React.Component {
@@ -30,12 +33,17 @@ class EntryItem extends React.Component {
   }
 
   render() {
-    const { title, domain, date, subject, bookmarkCount, entryFavicon } = this.props.item;
+    const { title, link, domain, date, subject, bookmarkCount, entryFavicon } = this.props.item;
     return (
       <ListItem
         transparent
         onPress={() => {
-          console.log(1);
+          Actions.entry({ item: entryObject({}, link) });
+          fetchBookmarkInfo(link, true).then((resp) => {
+            Actions.refresh({ item: entryObject(resp, link) });
+          }).catch((e) => {
+            console.log(e);
+          });
         }}
         style={styles(this.props.isNightMode).feedListItem}
       >
