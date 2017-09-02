@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
 } from 'react-native';
 import {
@@ -17,16 +17,10 @@ import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Comment from './Comment';
+
 import { styles } from '../../assets/styles/bookmark_comment/index';
 
-class BookmarkComment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: this.props.item,
-    };
-  }
-
+class BookmarkComment extends Component {
   render() {
     return (
       <Container>
@@ -42,12 +36,14 @@ class BookmarkComment extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title style={styles(this.props.isNightMode).headerTitle}>{ this.state.item.bookmarkCount } users</Title>
+            <Title style={styles(this.props.isNightMode).headerTitle}>{ this.props.item.bookmarkCount } users</Title>
           </Body>
           <Right />
         </Header>
         <Content style={styles(this.props.isNightMode).content}>
-          <Comment link={this.state.item.link} entryText={this.state.item.entry} />
+          <Comment
+            item={this.props.item}
+          />
         </Content>
       </Container>
     );
@@ -66,11 +62,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(BookmarkComment);

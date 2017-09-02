@@ -1,38 +1,41 @@
-import React from 'react';
-import {
-  View,
-  Image,
-  Text,
-} from 'react-native';
-import {
-  ListItem,
-} from 'native-base';
+import React, { Component } from 'react';
+import { View, Image, Text } from 'react-native';
+import { ListItem } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Hyperlink from 'react-native-hyperlink';
+
 import { fetchBookmarkInfo } from '../../models/api';
-import { profileIcon, readableDate, itemObject } from '../../libs/utils';
+import { profileIcon, readableDate, itemObject, validCount } from '../../libs/utils';
+
 import { styles } from '../../assets/styles/bookmark_comment/comment_item';
 
-class CommentItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: this.props.item,
+class CommentItem extends Component {
+  // bookmark詳細で必要なデータ
+  bookmarkItem() {
+    return {
+      // bookmark info
+      title: this.props.bookmarkInfo.title,
+      link: this.props.bookmarkInfo.url,
+      entryImage: this.props.bookmarkInfo.screenshot,
+      bookmarkCount: this.props.bookmarkInfo.count,
+      // bookmarker info
+      description: this.props.bookmarkerInfo.comment,
+      userName: this.props.bookmarkerInfo.user,
+      userIcon: profileIcon(this.props.bookmarkerInfo.user),
+      entry: this.props.bookmarkerInfo.entryText,
+      date: readableDate(this.props.bookmarkerInfo.timestamp),
+      stars: this.props.bookmarkerInfo.stars,
+      colored_stars: this.props.bookmarkerInfo.colored_stars,
     };
   }
 
-  validCount(obj) {
-    if (obj === undefined) return 0;
-    return obj.length;
-  }
-
   starComponent() {
-    const { stars, colored_stars } = this.state.item;
-    const starCount = this.validCount(stars);
-    const colorStarCount = this.validCount(colored_stars);
+    const { stars, colored_stars } = this.props.bookmarkerInfo;
+    const starCount = validCount(stars);
+    const colorStarCount = validCount(colored_stars);
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;
@@ -46,16 +49,18 @@ class CommentItem extends React.Component {
   }
 
   thumbnailComponent() {
-    const { user } = this.state.item;
+    const { user } = this.props.bookmarkerInfo;
     return (
-      <View style={styles(this.props.isNightMode).itemLeftInner}>
-        <Image style={styles(this.props.isNightMode).profileIcon} source={{ uri: profileIcon(user) }} />
+      <View style={styles(this.props.isNightMode).itemLeft}>
+        <View style={styles(this.props.isNightMode).itemLeftInner}>
+          <Image style={styles(this.props.isNightMode).profileIcon} source={{ uri: profileIcon(user) }} />
+        </View>
       </View>
     );
   }
 
   rightTopComponent() {
-    const { user, timestamp } = this.state.item;
+    const { user, timestamp } = this.props.bookmarkerInfo;
     return (
       <View style={styles(this.props.isNightMode).rightTop}>
         <View style={styles(this.props.isNightMode).rightTopUserName}>
@@ -70,7 +75,7 @@ class CommentItem extends React.Component {
   }
 
   commentComponent() {
-    const { comment, tags } = this.state.item;
+    const { comment, tags } = this.props.bookmarkerInfo;
     let joinedTags = '';
     if (tags.length > 0) {
       joinedTags = tags.map(tag => `[${tag}]`).join('');
@@ -92,51 +97,38 @@ class CommentItem extends React.Component {
     );
   }
 
+  rightComponent() {
+    return (
+      <View style={styles(this.props.isNightMode).itemRight}>
+        { this.rightTopComponent() }
+        { this.commentComponent() }
+      </View>
+    );
+  }
+
   render() {
     return (
       <ListItem
         onPress={() => {
-          // bookmark詳細で必要なデータ
-          // TODO: 綺麗にしたい
-          const itemData = {
-            title: this.props.entry.title,
-            description: this.state.item.comment,
-            creator: this.state.item.user,
-            userIcon: profileIcon(this.state.item.user),
-            link: this.props.entry.url,
-            entry: this.props.entryText,
-            entryImage: this.props.entry.screenshot,
-            date: readableDate(this.state.item.timestamp),
-            bookmarkCount: this.props.entry.count,
-            stars: this.state.item.stars,
-            colored_stars: this.state.item.colored_stars,
-          };
-          Actions.bookmark({ item: itemData });
+          Actions.bookmark({ item: this.bookmarkItem() });
         }}
         style={styles(this.props.isNightMode).bookmarkCommentListItem}
       >
-        <View style={styles(this.props.isNightMode).itemLeft}>
-          { this.thumbnailComponent() }
-        </View>
-        <View style={styles(this.props.isNightMode).itemRight}>
-          { this.rightTopComponent() }
-          { this.commentComponent() }
-        </View>
+        { this.thumbnailComponent() }
+        { this.rightComponent() }
       </ListItem>
     );
   }
 }
 
 CommentItem.defaultProps = {
-  entry: {},
-  entryText: '',
+  bookmarkInfo: {},
 };
 
 CommentItem.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
-  item: PropTypes.object.isRequired,
-  entry: PropTypes.object,
-  entryText: PropTypes.string,
+  bookmarkerInfo: PropTypes.object.isRequired,
+  bookmarkInfo: PropTypes.object,
 };
 
 function mapStateToProps(state) {
@@ -146,11 +138,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(CommentItem);

@@ -1,11 +1,10 @@
 import { EventEmitter } from 'events';
-import {
-  feedItems,
-} from '../libs/hatena_feed_parser';
+import { feedItems } from '../libs/hatena_feed_parser';
+import { bookmarkRest } from '../libs/response/bookmark_rest';
 import OAuth from '../libs/oauth';
 import { CONSUMER_KEY, CONSUMER_SECRET } from '../constants/config';
 import { getUserData } from './userStorage';
-import { alert } from '../libs/utils';
+import { bookmarkCommentUrl, alert } from '../libs/utils';
 
 // Fetch star info separately and reccursively to avoid 414 URL TOO LONG ERROR.
 const eventEmitter = new EventEmitter();
@@ -44,7 +43,7 @@ function _fetchStarReccursively(links, offset, limit) {
   });
 }
 
-function _assignStarInfoToItems(items) {
+function _assignStarsToRssInfo(items) {
   // generate bookmark comment uri
   const query = items.map((item) => {
     const bCommentUrl = encodeURIComponent(item.bookmarkCommentUrl);
@@ -63,6 +62,29 @@ function _assignStarInfoToItems(items) {
     });
     return item;
   }));
+}
+
+function _assignStarsToBookmarkInfo(items) {
+  // generate bookmark comment uri
+  if (items === null || items.bookmarks === null) return;
+  const query = items.bookmarks.map((bookmark) => {
+    const bCommentUrl = encodeURIComponent(bookmarkCommentUrl(items.eid, bookmark.user, bookmark.timestamp));
+    return `uri=${bCommentUrl}`;
+  });
+
+  // fetch bookmark stars and asign the star itemsmartion to each comment items
+  return getBookmarkStar(query).then((stars) => {
+    items.bookmarks.map((bookmark, i) => {
+      stars.entries.map((entry) => {
+        if (bookmark.user === entry.name) {
+          items.bookmarks[i].stars = entry.stars || [];
+          items.bookmarks[i].colored_stars = entry.colored_stars || [];
+        }
+      });
+    });
+  }).then(() => items).catch((e) => {
+    console.log(e);
+  });
 }
 
 // get star of bookmark commemt
@@ -92,7 +114,7 @@ export function fetchFavorites(userId, offset) {
 
   const url = `http://b.hatena.ne.jp/${userId}/favorite.rss?of=${offset}&with_me=1`;
 
-  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarInfoToItems(items))).catch((err) => {
+  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarsToRssInfo(items))).catch((err) => {
     console.log(err.message);
     alert('ネットワークエラー', '電波環境が良くなってから再度お試しください');
     throw err.message;
@@ -111,7 +133,7 @@ export function fetchMyBookmarks(userId, offset) {
 
   const url = `http://b.hatena.ne.jp/${userId}/rss?of=${offset}`;
 
-  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarInfoToItems(items))).catch((err) => {
+  return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarsToRssInfo(items))).catch((err) => {
     console.log(err.message);
   });
 }
@@ -131,7 +153,7 @@ export function fetchBookmarkInfo(url) {
       oauth_token,
       oauth_token_secret,
       { url },
-    ).then(resp => resp).catch((e) => {
+    ).then(resp => bookmarkRest(resp)).then(items => _assignStarsToBookmarkInfo(items)).catch((e) => {
       console.log(e);
     });
   });

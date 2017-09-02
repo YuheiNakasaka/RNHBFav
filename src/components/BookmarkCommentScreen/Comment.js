@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -6,62 +6,40 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { fetchBookmarkInfo } from '../../models/api';
+
 import CommentItem from './CommentItem';
-import { fetchBookmarkInfo, getBookmarkStar } from '../../models/api';
-import { bookmarkCommentUrl } from '../../libs/utils';
 import MySpinner from '../CommonComponent/Spinner';
+
 import { styles } from '../../assets/styles/bookmark_comment/comment';
 
-class Comment extends React.Component {
+class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      link: this.props.link,
-      entryText: this.props.entryText,
-      entry: null,
+      bookmarkInfo: null,
       isLoading: true,
     };
   }
 
   componentDidMount() {
-    fetchBookmarkInfo(this.state.link).then((info) => {
-      this.assignStarsToBookmarkInfo(info);
+    fetchBookmarkInfo(this.props.item.link).then((items) => {
+      this.setState({ bookmarkInfo: items, isLoading: false });
     });
   }
 
-  assignStarsToBookmarkInfo(info) {
-    // generate bookmark comment uri
-    if (info === null || info.bookmarks === null) return;
-    const query = info.bookmarks.map((bookmark) => {
-      const bCommentUrl = encodeURIComponent(bookmarkCommentUrl(info.eid, bookmark.user, bookmark.timestamp));
-      return `uri=${bCommentUrl}`;
-    });
-
-    // fetch bookmark stars and asign the star infomartion to each comment info
-    getBookmarkStar(query).then((stars) => {
-      info.bookmarks.map((bookmark, i) => {
-        stars.entries.map((entry) => {
-          if (bookmark.user === entry.name) {
-            info.bookmarks[i].stars = entry.stars || [];
-            info.bookmarks[i].colored_stars = entry.colored_stars || [];
-          }
-        });
-      });
-    }).then(() => {
-      this.setState({ entry: info, isLoading: false });
-    }).catch((e) => {
-      console.log(e);
-    });
+  // fetch top 10 starred bookmarks
+  calcPopularStar() {
+    return this.state.bookmarkInfo.bookmarks
+      .filter(bm => bm.comment !== '' && (bm.stars.length + bm.colored_stars.length) > 0)
+      .sort((a, b) => (b.stars.length + b.colored_stars.length) - (a.stars.length + a.colored_stars.length))
+      .slice(0, 10);
   }
 
   popularCommentsComponent() {
-    if (this.state.entry !== null) {
-      // fetch top 10 starred bookmarks
-      const bookmarks = this.state.entry.bookmarks
-        .filter(bm => bm.comment !== '' && (bm.stars.length + bm.colored_stars.length) > 0)
-        .sort((a, b) => (b.stars.length + b.colored_stars.length) - (a.stars.length + a.colored_stars.length))
-        .slice(0, 10);
-
+    if (this.state.bookmarkInfo !== null) {
+      const bookmarks = this.calcPopularStar();
       if (bookmarks.length === 0) return null;
       return (
         <View>
@@ -72,7 +50,7 @@ class Comment extends React.Component {
             style={styles(this.props.isNightMode).list}
             data={bookmarks}
             renderItem={({ item }) => (
-              <CommentItem item={item} entry={this.state.entry} entryText={this.state.entryText} />
+              <CommentItem item={item} bookmarkInfo={this.state.bookmarkInfo} />
             )}
             keyExtractor={(item, index) => index}
           />
@@ -83,7 +61,7 @@ class Comment extends React.Component {
   }
 
   commentsComponent() {
-    if (this.state.entry !== null) {
+    if (this.state.bookmarkInfo !== null) {
       return (
         <View>
           <View style={styles(this.props.isNightMode).listWrapAllComments}>
@@ -91,9 +69,9 @@ class Comment extends React.Component {
           </View>
           <FlatList
             style={styles(this.props.isNightMode).list}
-            data={this.state.entry.bookmarks}
+            data={this.state.bookmarkInfo.bookmarks}
             renderItem={({ item }) => (
-              <CommentItem item={item} entry={this.state.entry} entryText={this.state.entryText} />
+              <CommentItem bookmarkerInfo={item} bookmarkInfo={this.state.bookmarkInfo} />
             )}
             keyExtractor={(item, index) => index}
           />
@@ -123,14 +101,9 @@ class Comment extends React.Component {
   }
 }
 
-Comment.defaultProps = {
-  entryText: '',
-};
-
 Comment.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
-  link: PropTypes.string.isRequired,
-  entryText: PropTypes.string,
+  item: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -140,11 +113,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Comment);
