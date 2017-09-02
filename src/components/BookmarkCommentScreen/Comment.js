@@ -32,7 +32,7 @@ class Comment extends Component {
   // fetch top 10 starred bookmarks
   calcPopularStar() {
     return this.state.bookmarkInfo.bookmarks
-      .filter(bm => bm.comment !== '' && (bm.stars.length + bm.colored_stars.length) > 0)
+      .filter(bm => bm.comment !== '' && bm.stars && bm.colored_stars && (bm.stars.length + bm.colored_stars.length) > 0)
       .sort((a, b) => (b.stars.length + b.colored_stars.length) - (a.stars.length + a.colored_stars.length))
       .slice(0, 10);
   }
@@ -50,7 +50,7 @@ class Comment extends Component {
             style={styles(this.props.isNightMode).list}
             data={bookmarks}
             renderItem={({ item }) => (
-              <CommentItem item={item} bookmarkInfo={this.state.bookmarkInfo} />
+              <CommentItem bookmarkerInfo={item} bookmarkInfo={this.state.bookmarkInfo} />
             )}
             keyExtractor={(item, index) => index}
           />

@@ -24,7 +24,7 @@ import Hyperlink from 'react-native-hyperlink';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { fetchBookmarkInfo } from '../../models/api';
-import { itemObject, validCount } from '../../libs/utils';
+import { entryObject, validCount } from '../../libs/utils';
 
 import { styles } from '../../assets/styles/bookmark/index';
 
@@ -85,7 +85,7 @@ class Bookmark extends Component {
             linkStyle={styles(this.props.isNightMode).descriptionLink}
             onPress={(urlText) => {
               fetchBookmarkInfo(urlText).then((resp) => {
-                Actions.entry({ item: itemObject(resp, urlText) });
+                Actions.entry({ item: entryObject(resp, urlText) });
               }).catch((e) => {
                 console.log(e);
               });

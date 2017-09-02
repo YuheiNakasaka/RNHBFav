@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Container,
   Header,
@@ -12,10 +12,12 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import Feed from './Feed';
+
 import { styles } from '../../assets/styles/user_bookmark/index';
 
-class UserBookmark extends React.Component {
+class UserBookmark extends Component {
   headerComponent() {
     return (
       <Header style={styles(this.props.isNightMode).header}>
@@ -68,11 +70,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(UserBookmark);

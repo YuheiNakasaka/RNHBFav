@@ -18,7 +18,7 @@ import Share from 'react-native-share';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WKWebView from 'react-native-wkwebview-reborn';
 import { fetchBookmarkInfo } from '../../models/api';
-import { itemObject } from '../../libs/utils';
+import { entryObject } from '../../libs/utils';
 import { styles } from '../../assets/styles/entry/index';
 
 
@@ -41,7 +41,7 @@ class Entry extends Component {
   // fetch current page information to bookmark the article you are reading now
   fetchCurrentPageInfo() {
     fetchBookmarkInfo(this.currentUrl).then((resp) => {
-      this.setState({ item: itemObject(resp, this.currentUrl) });
+      this.setState({ item: entryObject(resp, this.currentUrl) });
     }).catch((e) => {
       console.log(e);
     });

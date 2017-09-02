@@ -35,8 +35,8 @@ export function validCount(item) {
 }
 
 // match interface with rss response
-export function itemObject(response, url) {
-  if (response === null) {
+export function entryObject(response, url) {
+  if (response === null || response === undefined) {
     return {
       title: url,
       link: url,

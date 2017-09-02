@@ -27,7 +27,7 @@ import { saveAccessData, getAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
 import { saveUrlData, getUrlData } from '../../models/urlStorage';
-import { profileIcon, itemObject, truncate, isUrl, alert } from '../../libs/utils';
+import { profileIcon, entryObject, truncate, isUrl, alert } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
@@ -93,7 +93,7 @@ class Root extends React.Component {
     if (isUrl(urlText)) {
       this.setState({ urlLoading: true });
       fetchBookmarkInfo(urlText)
-        .then(resp => Actions.entry({ item: itemObject(resp, urlText) }))
+        .then(resp => Actions.entry({ item: entryObject(resp, urlText) }))
         .catch(() => alert('Network Error', 'ネット環境をご確認ください'))
         .then(() => this.setState({ urlLoading: false }));
     } else {

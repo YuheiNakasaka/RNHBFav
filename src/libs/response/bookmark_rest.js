@@ -1,6 +1,7 @@
 // はてぶREST APIのレスポンス
 export function bookmarkRest(item) {
   const hash = {};
+  if (item === null) return null;
   hash.bookmarks = item.bookmarks;
   hash.count = item.count;
   hash.eid = item.eid;
