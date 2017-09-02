@@ -23,6 +23,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   fetchMyBookmarkFeed,
   fetchFavoriteFeed,
+  fetchHotEntryFeed,
   updateUser,
   updateLoading,
   updateFeedType,
@@ -37,6 +38,7 @@ class Menu extends Component {
     super(props);
     this.fetchFavoriteFeed = this.props.fetchFavoriteFeed;
     this.fetchMyBookmarkFeed = this.props.fetchMyBookmarkFeed;
+    this.fetchHotEntryFeed = this.props.fetchHotEntryFeed;
     this.updateUser = this.props.updateUser;
     this.updateLoading = this.props.updateLoading;
     this.updateStyleType = this.props.updateStyleType;
@@ -60,6 +62,37 @@ class Menu extends Component {
         </Right>
       </ListItem>
     );
+  }
+
+  entryListComponent() {
+    const categories = [
+      ['social', '世の中'],
+      ['economics', '政治と経済'],
+      ['life', '暮らし'],
+      ['knowledge', '学び'],
+      ['it', 'テクノロジー'],
+      ['entertainment', 'エンタメ'],
+      ['game', 'アニメとゲーム'],
+      ['fun', 'おもしろ'],
+    ];
+    return categories.map(category => (
+      <ListItem
+        key={category[0]}
+        onPress={() => {
+          this.updateLoading(true);
+          this.fetchHotEntryFeed(category[0]);
+          Actions.pop();
+        }}
+        style={styles(this.props.isNightMode).listItem}
+      >
+        <Left>
+          <Text style={styles(this.props.isNightMode).textColor}>{ category[1] }</Text>
+        </Left>
+        <Right>
+          <Icon name="ios-arrow-forward" />
+        </Right>
+      </ListItem>
+    ));
   }
 
   render() {
@@ -111,26 +144,15 @@ class Menu extends Component {
               style={styles(this.props.isNightMode).listItem}
             >
               <Left>
-                <Text style={styles(this.props.isNightMode).textColor}>自分のブックマーク</Text>
+                <Text style={styles(this.props.isNightMode).textColor}>マイブックマーク</Text>
               </Left>
               <Right>
                 <Icon name="ios-arrow-forward" />
               </Right>
             </ListItem>
-            <ListItem
-              onPress={() => {
-                this.updateFeedType('hotEntry');
-                Actions.pop();
-              }}
-              style={styles(this.props.isNightMode).listItem}
-            >
-              <Left>
-                <Text style={styles(this.props.isNightMode).textColor}>人気エントリ</Text>
-              </Left>
-              <Right>
-                <Icon name="ios-arrow-forward" />
-              </Right>
-            </ListItem>
+
+            <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
+            { this.entryListComponent() }
 
             <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
             { this.nightModeComponent() }
@@ -200,6 +222,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchFavoriteFeed: (userId, offset) => dispatch(fetchFavoriteFeed(userId, offset)),
     fetchMyBookmarkFeed: (userId, offset) => dispatch(fetchMyBookmarkFeed(userId, offset)),
+    fetchHotEntryFeed: category => dispatch(fetchHotEntryFeed(category)),
     updateUser: user => dispatch(updateUser(user)),
     updateLoading: loading => dispatch(updateLoading(loading)),
     updateStyleType: isNightMode => dispatch(updateStyleType(isNightMode)),

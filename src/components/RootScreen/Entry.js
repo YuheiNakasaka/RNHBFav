@@ -23,13 +23,16 @@ class Entry extends React.Component {
 
   componentDidMount() {
     this.updateLoading(true);
-    this.fetchLatestData();
   }
 
   onRefreshHandler() {
     if (this.state.refreshing === true || this.props.loading === true) return;
     this.setState({ refreshing: true });
     this.fetchLatestData();
+  }
+
+  entryCategory() {
+    return this.props.feedType.replace(/.+:/, '');
   }
 
   spinnerComponent() {
@@ -44,7 +47,7 @@ class Entry extends React.Component {
   fetchLatestData() {
     switch (this.props.feedType) {
       case 'newEntry':
-        this.fetchNewEntry('social').then(() => {
+        this.fetchNewEntry(this.entryCategory()).then(() => {
           this.setState({ refreshing: false });
           this.updateLoading(false);
         }).catch(() => {
@@ -52,7 +55,7 @@ class Entry extends React.Component {
         });
         break;
       default:
-        this.fetchHotEntryFeed('social').then(() => {
+        this.fetchHotEntryFeed(this.entryCategory()).then(() => {
           this.setState({ refreshing: false });
           this.updateLoading(false);
         }).catch(() => {

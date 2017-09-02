@@ -12,31 +12,29 @@ export function fetchFavoriteFeed(userId, offset) {
 }
 
 export function fetchMyBookmarkFeed(userId, offset) {
-  return fetchMyBookmarks(userId, offset).then(resp => ({
+  return fetchMyBookmarks(userId, offset).then(items => ({
     type: UPDATE_FEED_ITEMS,
-    items: resp,
+    items,
     feedType: 'myBookmark',
     offset,
     loading: false,
   }));
 }
 
-export function fetchHotEntryFeed(category, offset) {
-  return fetchHotEntry(category, offset).then(resp => ({
+export function fetchHotEntryFeed(category) {
+  return fetchHotEntry(category).then(items => ({
     type: UPDATE_FEED_ITEMS,
-    items: resp,
-    feedType: 'hotEntry',
-    offset,
+    items,
+    feedType: `hotEntry:${category}`,
     loading: false,
   }));
 }
 
-export function fetchNewEntryFeed(category, offset) {
-  return fetchNewEntry(category, offset).then(resp => ({
+export function fetchNewEntryFeed(category) {
+  return fetchNewEntry(category).then(items => ({
     type: UPDATE_FEED_ITEMS,
-    items: resp,
-    feedType: 'newEntry',
-    offset,
+    items,
+    feedType: `newEntry:${category}`,
     loading: false,
   }));
 }

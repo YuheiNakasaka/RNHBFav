@@ -241,7 +241,7 @@ class Root extends React.Component {
 
   feedComponent() {
     if (this.userPresent()) {
-      if (this.props.feedType === 'hotEntry') {
+      if (this.props.feedType.match(/hotEntry/)) {
         return (
           <Entry user={this.props.user} />
         );
