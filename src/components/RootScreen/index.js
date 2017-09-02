@@ -33,6 +33,7 @@ import { updateUser } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
 
 import Feed from './Feed';
+import Entry from './Entry';
 import MessageBar from '../CommonComponent/MessageBar';
 
 import { styles } from '../../assets/styles/root/index';
@@ -240,6 +241,11 @@ class Root extends React.Component {
 
   feedComponent() {
     if (this.userPresent()) {
+      if (this.props.feedType === 'hotEntry') {
+        return (
+          <Entry user={this.props.user} />
+        );
+      }
       return (
         <Feed user={this.props.user} />
       );
@@ -285,6 +291,7 @@ Root.defaultProps = {
 
 Root.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
+  feedType: PropTypes.string.isRequired,
   user: PropTypes.object,
   updateUser: PropTypes.func.isRequired,
   updateStyleType: PropTypes.func.isRequired,
@@ -293,6 +300,7 @@ Root.propTypes = {
 function mapStateToProps(state) {
   const { rootData, styleData } = state;
   return {
+    feedType: rootData.feedType,
     user: rootData.user,
     isNightMode: styleData.isNightMode,
   };

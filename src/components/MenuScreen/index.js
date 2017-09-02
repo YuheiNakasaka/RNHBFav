@@ -20,7 +20,13 @@ import PropTypes from 'prop-types';
 import DeviceInfo from 'react-native-device-info';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { fetchMyBookmarkFeed, fetchFavoriteFeed, updateUser, updateLoading } from '../../actions/root';
+import {
+  fetchMyBookmarkFeed,
+  fetchFavoriteFeed,
+  updateUser,
+  updateLoading,
+  updateFeedType,
+} from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
 import { deleteUserData } from '../../models/userStorage';
 
@@ -34,6 +40,7 @@ class Menu extends Component {
     this.updateUser = this.props.updateUser;
     this.updateLoading = this.props.updateLoading;
     this.updateStyleType = this.props.updateStyleType;
+    this.updateFeedType = this.props.updateFeedType;
   }
 
   nightModeComponent() {
@@ -110,6 +117,20 @@ class Menu extends Component {
                 <Icon name="ios-arrow-forward" />
               </Right>
             </ListItem>
+            <ListItem
+              onPress={() => {
+                this.updateFeedType('hotEntry');
+                Actions.pop();
+              }}
+              style={styles(this.props.isNightMode).listItem}
+            >
+              <Left>
+                <Text style={styles(this.props.isNightMode).textColor}>人気エントリ</Text>
+              </Left>
+              <Right>
+                <Icon name="ios-arrow-forward" />
+              </Right>
+            </ListItem>
 
             <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
             { this.nightModeComponent() }
@@ -165,6 +186,7 @@ Menu.propTypes = {
   updateUser: PropTypes.func.isRequired,
   updateLoading: PropTypes.func.isRequired,
   updateStyleType: PropTypes.func.isRequired,
+  updateFeedType: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -181,6 +203,7 @@ function mapDispatchToProps(dispatch) {
     updateUser: user => dispatch(updateUser(user)),
     updateLoading: loading => dispatch(updateLoading(loading)),
     updateStyleType: isNightMode => dispatch(updateStyleType(isNightMode)),
+    updateFeedType: feedType => dispatch(updateFeedType(feedType)),
   };
 }
 

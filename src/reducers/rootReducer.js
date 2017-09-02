@@ -1,4 +1,4 @@
-import { UPDATE_FEED_ITEMS, UPDATE_USER, UPDATE_LOADING } from '../constants/root';
+import { UPDATE_FEED_ITEMS, UPDATE_USER, UPDATE_LOADING, UPDATE_FEED_TYPE } from '../constants/root';
 
 const initialState = {
   user: {},
@@ -18,6 +18,12 @@ export default function dataReducer(state = initialState, action) {
         feedType: action.feedType,
         offset: action.offset,
         loading: action.loading,
+      };
+    }
+    case UPDATE_FEED_TYPE: {
+      return {
+        ...state,
+        feedType: action.feedType,
       };
     }
     case UPDATE_USER: {

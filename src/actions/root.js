@@ -1,5 +1,5 @@
-import { UPDATE_FEED_ITEMS, UPDATE_USER, UPDATE_LOADING } from '../constants/root';
-import { fetchFavorites, fetchMyBookmarks } from '../models/api';
+import { UPDATE_FEED_ITEMS, UPDATE_USER, UPDATE_LOADING, UPDATE_FEED_TYPE } from '../constants/root';
+import { fetchFavorites, fetchMyBookmarks, fetchHotEntry, fetchNewEntry } from '../models/api';
 
 export function fetchFavoriteFeed(userId, offset) {
   return fetchFavorites(userId, offset).then(items => ({
@@ -19,6 +19,33 @@ export function fetchMyBookmarkFeed(userId, offset) {
     offset,
     loading: false,
   }));
+}
+
+export function fetchHotEntryFeed(category, offset) {
+  return fetchHotEntry(category, offset).then(resp => ({
+    type: UPDATE_FEED_ITEMS,
+    items: resp,
+    feedType: 'hotEntry',
+    offset,
+    loading: false,
+  }));
+}
+
+export function fetchNewEntryFeed(category, offset) {
+  return fetchNewEntry(category, offset).then(resp => ({
+    type: UPDATE_FEED_ITEMS,
+    items: resp,
+    feedType: 'newEntry',
+    offset,
+    loading: false,
+  }));
+}
+
+export function updateFeedType(feedType) {
+  return {
+    type: UPDATE_FEED_TYPE,
+    feedType,
+  };
 }
 
 export function updateUser(user) {

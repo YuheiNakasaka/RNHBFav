@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { feedItems } from '../libs/hatena_feed_parser';
+import { feedItems, entryItems } from '../libs/hatena_feed_parser';
 import { bookmarkRest } from '../libs/response/bookmark_rest';
 import OAuth from '../libs/oauth';
 import { CONSUMER_KEY, CONSUMER_SECRET } from '../constants/config';
@@ -134,6 +134,40 @@ export function fetchMyBookmarks(userId, offset) {
   const url = `http://b.hatena.ne.jp/${userId}/rss?of=${offset}`;
 
   return fetch(url, myInit).then(response => feedItems(response._bodyText).then(res => res).then(items => _assignStarsToRssInfo(items))).catch((err) => {
+    console.log(err.message);
+  });
+}
+
+// fetch hot entry as xml data
+export function fetchHotEntry(category) {
+  const myInit = {
+    method: 'GET',
+    headers: {
+      pragma: 'no-cache',
+      'cache-control': 'no-cache',
+    },
+  };
+
+  const url = `http://b.hatena.ne.jp/hotentry/${category}.rss`;
+
+  return fetch(url, myInit).then(response => entryItems(response._bodyText).then(res => res)).catch((err) => {
+    console.log(err.message);
+  });
+}
+
+// fetch hot entry as xml data
+export function fetchNewEntry(category) {
+  const myInit = {
+    method: 'GET',
+    headers: {
+      pragma: 'no-cache',
+      'cache-control': 'no-cache',
+    },
+  };
+
+  const url = `http://b.hatena.ne.jp/entrylist/${category}.rss`;
+
+  return fetch(url, myInit).then(response => entryItems(response._bodyText).then(res => res)).catch((err) => {
     console.log(err.message);
   });
 }
