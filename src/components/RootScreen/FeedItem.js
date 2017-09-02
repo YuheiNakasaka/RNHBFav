@@ -11,29 +11,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { validCount } from '../../libs/utils';
 import { styles } from '../../assets/styles/root/feed_item';
 
 class FeedItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: this.props.item,
-    };
-  }
-
-  // まれにキャッシュかなにかの問題でstarの結果とbookmarkの結果の個数が違うことがあるので
-  // 確認を入念にする
-  validCount(item) {
-    if (item) {
-      return item.length;
-    }
-    return 0;
-  }
-
   starComponent() {
-    const { stars, colored_stars } = this.state.item;
-    const starCount = this.validCount(stars);
-    const colorStarCount = this.validCount(colored_stars);
+    const { stars, colored_stars } = this.props.item;
+    const starCount = validCount(stars);
+    const colorStarCount = validCount(colored_stars);
     const totalStar = starCount + colorStarCount;
     if (totalStar === 0) {
       return null;
@@ -56,12 +41,12 @@ class FeedItem extends React.Component {
   }
 
   render() {
-    const { title, description, creator, userIcon, date } = this.state.item;
+    const { title, description, userName, userIcon, date } = this.props.item;
     return (
       <ListItem
         transparent
         onPress={() => {
-          Actions.bookmark({ item: this.state.item });
+          Actions.bookmark({ item: this.props.item });
         }}
         style={styles(this.props.isNightMode).feedListItem}
       >
@@ -73,7 +58,7 @@ class FeedItem extends React.Component {
         <View style={styles(this.props.isNightMode).right}>
           <View style={styles(this.props.isNightMode).rightTop}>
             <View style={styles(this.props.isNightMode).rightTopUserName}>
-              <Text style={styles(this.props.isNightMode).rightTopUserNameText}>{ creator }</Text>
+              <Text style={styles(this.props.isNightMode).rightTopUserNameText}>{ userName }</Text>
               { this.starComponent() }
             </View>
             <View style={styles(this.props.isNightMode).rightTopCreatedAt}>
@@ -100,11 +85,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(FeedItem);

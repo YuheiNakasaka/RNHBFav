@@ -22,8 +22,7 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Feed from './Feed';
-import MessageBar from '../CommonComponent/MessageBar';
+
 import { saveAccessData, getAccessData } from '../../models/accessStorage';
 import { getUserData } from '../../models/userStorage';
 import { getStyleData } from '../../models/styleStorage';
@@ -32,6 +31,10 @@ import { profileIcon, itemObject, truncate, isUrl, alert } from '../../libs/util
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
+
+import Feed from './Feed';
+import MessageBar from '../CommonComponent/MessageBar';
+
 import { styles } from '../../assets/styles/root/index';
 
 class Root extends React.Component {

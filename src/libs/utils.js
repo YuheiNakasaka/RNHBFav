@@ -1,6 +1,10 @@
 import { Alert } from 'react-native';
 import moment from 'moment';
 
+export function isUrl(text) {
+  return text.match(/^http[s]*:\/\/.+/);
+}
+
 export function bookmarkCommentUrl(eid, user, timestamp) {
   const date = timestamp.split(' ')[0].replace(/\//g, '');
   return `http://b.hatena.ne.jp/${user}/${date}#bookmark-${eid}`;
@@ -21,8 +25,13 @@ export function truncate(title, pos = 10) {
   return `${title.slice(0, pos)}...`;
 }
 
-export function isUrl(text) {
-  return text.match(/^http[s]*:\/\/.+/);
+// まれにキャッシュかなにかの問題でstarの結果とbookmarkの結果の個数が違うことがあるので
+// 確認を入念にする
+export function validCount(item) {
+  if (item) {
+    return item.length;
+  }
+  return 0;
 }
 
 // match interface with rss response
