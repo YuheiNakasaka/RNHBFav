@@ -20,9 +20,17 @@ import PropTypes from 'prop-types';
 import DeviceInfo from 'react-native-device-info';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { fetchMyBookmarkFeed, fetchFavoriteFeed, updateUser, updateLoading } from '../../actions/root';
+import {
+  fetchMyBookmarkFeed,
+  fetchFavoriteFeed,
+  fetchHotEntryFeed,
+  updateUser,
+  updateLoading,
+  updateFeedType,
+} from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
 import { deleteUserData } from '../../models/userStorage';
+import { entryCategories } from '../../constants/categories';
 
 import { styles } from '../../assets/styles/menu/index';
 
@@ -31,9 +39,11 @@ class Menu extends Component {
     super(props);
     this.fetchFavoriteFeed = this.props.fetchFavoriteFeed;
     this.fetchMyBookmarkFeed = this.props.fetchMyBookmarkFeed;
+    this.fetchHotEntryFeed = this.props.fetchHotEntryFeed;
     this.updateUser = this.props.updateUser;
     this.updateLoading = this.props.updateLoading;
     this.updateStyleType = this.props.updateStyleType;
+    this.updateFeedType = this.props.updateFeedType;
   }
 
   nightModeComponent() {
@@ -53,6 +63,27 @@ class Menu extends Component {
         </Right>
       </ListItem>
     );
+  }
+
+  entryListComponent() {
+    return entryCategories.map(category => (
+      <ListItem
+        key={category[0]}
+        onPress={() => {
+          this.updateLoading(true);
+          this.fetchHotEntryFeed(category[0]);
+          Actions.pop();
+        }}
+        style={styles(this.props.isNightMode).listItem}
+      >
+        <Left>
+          <Text style={styles(this.props.isNightMode).textColor}>{ category[1] }</Text>
+        </Left>
+        <Right>
+          <Icon name="ios-arrow-forward" />
+        </Right>
+      </ListItem>
+    ));
   }
 
   render() {
@@ -89,7 +120,7 @@ class Menu extends Component {
               style={styles(this.props.isNightMode).listItem}
             >
               <Left>
-                <Text style={styles(this.props.isNightMode).textColor}>タイムライン</Text>
+                <Text style={styles(this.props.isNightMode).textColor}>ホーム</Text>
               </Left>
               <Right>
                 <Icon name="ios-arrow-forward" />
@@ -104,12 +135,15 @@ class Menu extends Component {
               style={styles(this.props.isNightMode).listItem}
             >
               <Left>
-                <Text style={styles(this.props.isNightMode).textColor}>自分のブックマーク</Text>
+                <Text style={styles(this.props.isNightMode).textColor}>マイブックマーク</Text>
               </Left>
               <Right>
                 <Icon name="ios-arrow-forward" />
               </Right>
             </ListItem>
+
+            <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
+            { this.entryListComponent() }
 
             <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
             { this.nightModeComponent() }
@@ -150,6 +184,8 @@ class Menu extends Component {
                 <Text style={styles(this.props.isNightMode).textColor}>ログアウト</Text>
               </Left>
             </ListItem>
+
+            <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
           </List>
         </Content>
       </Container>
@@ -162,9 +198,11 @@ Menu.propTypes = {
   userName: PropTypes.string.isRequired,
   fetchFavoriteFeed: PropTypes.func.isRequired,
   fetchMyBookmarkFeed: PropTypes.func.isRequired,
+  fetchHotEntryFeed: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
   updateLoading: PropTypes.func.isRequired,
   updateStyleType: PropTypes.func.isRequired,
+  updateFeedType: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -178,9 +216,11 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchFavoriteFeed: (userId, offset) => dispatch(fetchFavoriteFeed(userId, offset)),
     fetchMyBookmarkFeed: (userId, offset) => dispatch(fetchMyBookmarkFeed(userId, offset)),
+    fetchHotEntryFeed: category => dispatch(fetchHotEntryFeed(category)),
     updateUser: user => dispatch(updateUser(user)),
     updateLoading: loading => dispatch(updateLoading(loading)),
     updateStyleType: isNightMode => dispatch(updateStyleType(isNightMode)),
+    updateFeedType: feedType => dispatch(updateFeedType(feedType)),
   };
 }
 

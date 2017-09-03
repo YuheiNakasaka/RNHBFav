@@ -9,6 +9,9 @@ export function styles(type = false) {
     header: {
       backgroundColor: mainColor,
     },
+    headerBody: {
+      flex: 0,
+    },
     headerTitle: {
       color: '#fff',
     },
@@ -23,6 +26,9 @@ export function styles(type = false) {
     },
     headerRightIcon: {
       fontSize: 24,
+      color: '#fff',
+    },
+    headerRightButtonText: {
       color: '#fff',
     },
     urlBoxLeft: {

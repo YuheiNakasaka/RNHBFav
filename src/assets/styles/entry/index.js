@@ -6,8 +6,13 @@ export function styles(type = false) {
     header: {
       backgroundColor: mainColor,
     },
+    headerBody: {
+      flex: 0,
+      width: 240,
+    },
     headerTitle: {
       color: '#fff',
+      fontSize: 12,
     },
     headerIcon: {
       fontSize: 30,

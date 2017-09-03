@@ -237,4 +237,18 @@ export const nightModeStyle = {
     marginLeft: 5,
     color: textColor,
   },
+
+  // entry list
+  rootEntryLeftInnerTitleText: {
+    color: textColor,
+  },
+  rootEntryLeftInnerLinkText: {
+    color: grayColor,
+    fontSize: 12,
+  },
+  rootEntryLeftInnerMetaText: {
+    marginRight: 3,
+    color: textColor,
+    fontSize: 12,
+  },
 };

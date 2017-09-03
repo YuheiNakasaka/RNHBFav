@@ -61,7 +61,7 @@ class Entry extends Component {
             <MaterialIcon name="chevron-left" style={styles(this.props.isNightMode).headerIcon} />
           </Button>
         </Left>
-        <Body>
+        <Body style={styles(this.props.isNightMode).headerBody}>
           <Title style={styles(this.props.isNightMode).headerTitle}>{ this.state.item.title }</Title>
         </Body>
         <Right>
