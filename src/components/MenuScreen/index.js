@@ -30,6 +30,7 @@ import {
 } from '../../actions/root';
 import { updateStyleType } from '../../actions/style';
 import { deleteUserData } from '../../models/userStorage';
+import { entryCategories } from '../../constants/categories';
 
 import { styles } from '../../assets/styles/menu/index';
 
@@ -65,17 +66,7 @@ class Menu extends Component {
   }
 
   entryListComponent() {
-    const categories = [
-      ['social', '世の中'],
-      ['economics', '政治と経済'],
-      ['life', '暮らし'],
-      ['knowledge', '学び'],
-      ['it', 'テクノロジー'],
-      ['entertainment', 'エンタメ'],
-      ['game', 'アニメとゲーム'],
-      ['fun', 'おもしろ'],
-    ];
-    return categories.map(category => (
+    return entryCategories.map(category => (
       <ListItem
         key={category[0]}
         onPress={() => {
@@ -129,7 +120,7 @@ class Menu extends Component {
               style={styles(this.props.isNightMode).listItem}
             >
               <Left>
-                <Text style={styles(this.props.isNightMode).textColor}>タイムライン</Text>
+                <Text style={styles(this.props.isNightMode).textColor}>ホーム</Text>
               </Left>
               <Right>
                 <Icon name="ios-arrow-forward" />

@@ -9,6 +9,9 @@ export function styles(type = false) {
     header: {
       backgroundColor: mainColor,
     },
+    headerBody: {
+      flex: 0,
+    },
     headerTitle: {
       color: '#fff',
     },

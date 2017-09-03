@@ -30,6 +30,8 @@ import { saveUrlData, getUrlData } from '../../models/urlStorage';
 import { profileIcon, entryObject, truncate, isUrl, alert } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
 import { updateUser } from '../../actions/root';
+import { entryCategories } from '../../constants/categories';
+
 import { updateStyleType } from '../../actions/style';
 
 import Feed from './Feed';
@@ -143,6 +145,15 @@ class Root extends React.Component {
     return this.props.user !== undefined && Object.keys(this.props.user).length !== 0;
   }
 
+  // ヘッダーのタイトル変換器
+  titleTranslater(text) {
+    if (this.props.feedType.match(/(hotEntry|newEntry)/)) {
+      const trimedText = this.props.feedType.replace(/.+:/, '');
+      return entryCategories.filter(category => trimedText === category[0])[0][1];
+    }
+    return text === 'timeline' ? 'ホーム' : 'マイブックマーク';
+  }
+
   headerLeftComponent() {
     if (this.userPresent()) {
       const { url_name } = this.props.user;
@@ -168,6 +179,10 @@ class Root extends React.Component {
         <MaterialIcon name="login-variant" style={styles(this.props.isNightMode).headerLoginIcon} />
       </Button>
     );
+  }
+
+  headerCenterComponent() {
+    return <Title style={styles(this.props.isNightMode).headerTitle}>{ this.titleTranslater(this.props.feedType) }</Title>;
   }
 
   headerRightComponent() {
@@ -229,8 +244,8 @@ class Root extends React.Component {
         <Left>
           { this.headerLeftComponent() }
         </Left>
-        <Body>
-          <Title style={styles(this.props.isNightMode).headerTitle}>RNHBFav</Title>
+        <Body style={styles(this.props.isNightMode).headerBody}>
+          { this.headerCenterComponent() }
         </Body>
         <Right>
           { this.headerRightComponent() }
@@ -241,7 +256,7 @@ class Root extends React.Component {
 
   feedComponent() {
     if (this.userPresent()) {
-      if (this.props.feedType.match(/hotEntry/)) {
+      if (this.props.feedType.match(/hotEntry:/)) {
         return (
           <Entry user={this.props.user} />
         );
