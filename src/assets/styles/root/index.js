@@ -28,6 +28,9 @@ export function styles(type = false) {
       fontSize: 24,
       color: '#fff',
     },
+    headerRightButtonText: {
+      color: '#fff',
+    },
     urlBoxLeft: {
       backgroundColor: '#fff',
     },

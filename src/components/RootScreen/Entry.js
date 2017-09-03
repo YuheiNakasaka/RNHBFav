@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchHotEntryFeed, updateLoading } from '../../actions/root';
+import { fetchHotEntryFeed, fetchNewEntryFeed, updateLoading } from '../../actions/root';
 
 import EntryItem from './EntryItem';
 import MySpinner from '../CommonComponent/Spinner';
@@ -18,6 +18,7 @@ class Entry extends React.Component {
       refreshing: false,
     };
     this.fetchHotEntryFeed = this.props.fetchHotEntryFeed;
+    this.fetchNewEntryFeed = this.props.fetchNewEntryFeed;
     this.updateLoading = this.props.updateLoading;
   }
 
@@ -41,22 +42,20 @@ class Entry extends React.Component {
   }
 
   fetchLatestData() {
-    switch (this.props.feedType) {
-      case 'newEntry':
-        this.fetchNewEntry(this.entryCategory()).then(() => {
-          this.setState({ refreshing: false });
-          this.updateLoading(false);
-        }).catch(() => {
-          this.updateLoading(false);
-        });
-        break;
-      default:
-        this.fetchHotEntryFeed(this.entryCategory()).then(() => {
-          this.setState({ refreshing: false });
-          this.updateLoading(false);
-        }).catch(() => {
-          this.updateLoading(false);
-        });
+    if (this.props.feedType.match(/newEntry:/)) {
+      this.fetchNewEntryFeed(this.entryCategory()).then(() => {
+        this.setState({ refreshing: false });
+        this.updateLoading(false);
+      }).catch(() => {
+        this.updateLoading(false);
+      });
+    } else {
+      this.fetchHotEntryFeed(this.entryCategory()).then(() => {
+        this.setState({ refreshing: false });
+        this.updateLoading(false);
+      }).catch(() => {
+        this.updateLoading(false);
+      });
     }
   }
 
@@ -89,11 +88,11 @@ class Entry extends React.Component {
 
 Entry.propTypes = {
   isNightMode: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
   feedType: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   fetchHotEntryFeed: PropTypes.func.isRequired,
+  fetchNewEntryFeed: PropTypes.func.isRequired,
   updateLoading: PropTypes.func.isRequired,
 };
 
@@ -110,6 +109,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchHotEntryFeed: category => dispatch(fetchHotEntryFeed(category)),
+    fetchNewEntryFeed: category => dispatch(fetchNewEntryFeed(category)),
     updateLoading: loading => dispatch(updateLoading(loading)),
   };
 }

@@ -29,7 +29,7 @@ import { getStyleData } from '../../models/styleStorage';
 import { saveUrlData, getUrlData } from '../../models/urlStorage';
 import { profileIcon, entryObject, truncate, isUrl, alert } from '../../libs/utils';
 import { fetchBookmarkInfo } from '../../models/api';
-import { updateUser } from '../../actions/root';
+import { updateUser, updateLoading, fetchHotEntryFeed, fetchNewEntryFeed } from '../../actions/root';
 import { entryCategories } from '../../constants/categories';
 
 import { updateStyleType } from '../../actions/style';
@@ -55,6 +55,9 @@ class Root extends React.Component {
     };
     this.updateUser = this.props.updateUser;
     this.updateStyleType = this.props.updateStyleType;
+    this.updateLoading = this.props.updateLoading;
+    this.fetchHotEntryFeed = this.props.fetchHotEntryFeed;
+    this.fetchNewEntryFeed = this.props.fetchNewEntryFeed;
 
     // 初回起動か否か
     getAccessData().then((res) => {
@@ -141,13 +144,19 @@ class Root extends React.Component {
     this.setState({ appState: nextAppState });
   }
 
+  // ユーザーがすでにstoreされているかどうか
   userPresent() {
     return this.props.user !== undefined && Object.keys(this.props.user).length !== 0;
   }
 
+  // ユーザーのブックマークタイムラインではない、RSSのエントリーリストのフィードかどうか
+  isEntryFeed() {
+    return !!this.props.feedType.match(/(hotEntry|newEntry)/);
+  }
+
   // ヘッダーのタイトル変換器
   titleTranslater(text) {
-    if (this.props.feedType.match(/(hotEntry|newEntry)/)) {
+    if (this.isEntryFeed()) {
       const trimedText = this.props.feedType.replace(/.+:/, '');
       return entryCategories.filter(category => trimedText === category[0])[0][1];
     }
@@ -187,6 +196,9 @@ class Root extends React.Component {
 
   headerRightComponent() {
     if (this.userPresent()) {
+      if (this.isEntryFeed()) {
+        return this.switchCategoryHeaderComponent();
+      }
       return (
         <Button
           transparent
@@ -235,6 +247,29 @@ class Root extends React.Component {
     );
   }
 
+  switchCategoryHeaderComponent() {
+    const category = this.props.feedType.match(/:(.+)/)[1];
+    const isHotEntry = !!this.props.feedType.match(/hotEntry/);
+    const buttonText = isHotEntry ? '人気' : '新着';
+    return (
+      <Button
+        transparent
+        onPress={() => {
+          // 人気と新着のエントリを切り替える
+          if (isHotEntry) {
+            this.updateLoading(true);
+            this.fetchNewEntryFeed(category);
+          } else {
+            this.updateLoading(true);
+            this.fetchHotEntryFeed(category);
+          }
+        }}
+      >
+        <Text style={styles(this.props.isNightMode).headerRightButtonText}>{ buttonText }</Text>
+      </Button>
+    );
+  }
+
   headerComponent() {
     if (this.state.urlBoxOpen) {
       return this.urlBoxHeaderComponent();
@@ -256,7 +291,7 @@ class Root extends React.Component {
 
   feedComponent() {
     if (this.userPresent()) {
-      if (this.props.feedType.match(/hotEntry:/)) {
+      if (this.isEntryFeed()) {
         return (
           <Entry user={this.props.user} />
         );
@@ -309,6 +344,9 @@ Root.propTypes = {
   feedType: PropTypes.string.isRequired,
   user: PropTypes.object,
   updateUser: PropTypes.func.isRequired,
+  updateLoading: PropTypes.func.isRequired,
+  fetchHotEntryFeed: PropTypes.func.isRequired,
+  fetchNewEntryFeed: PropTypes.func.isRequired,
   updateStyleType: PropTypes.func.isRequired,
 };
 
@@ -325,6 +363,9 @@ function mapDispatchToProps(dispatch) {
   return {
     updateUser: user => dispatch(updateUser(user)),
     updateStyleType: isNightMode => dispatch(updateStyleType(isNightMode)),
+    updateLoading: bool => dispatch(updateLoading(bool)),
+    fetchHotEntryFeed: category => dispatch(fetchHotEntryFeed(category)),
+    fetchNewEntryFeed: category => dispatch(fetchNewEntryFeed(category)),
   };
 }
 

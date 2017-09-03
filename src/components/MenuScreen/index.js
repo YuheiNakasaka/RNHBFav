@@ -184,6 +184,8 @@ class Menu extends Component {
                 <Text style={styles(this.props.isNightMode).textColor}>ログアウト</Text>
               </Left>
             </ListItem>
+
+            <ListItem itemDivider style={styles(this.props.isNightMode).listItemDivider} />
           </List>
         </Content>
       </Container>
