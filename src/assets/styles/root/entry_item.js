@@ -34,6 +34,9 @@ export function styles(type = false) {
       color: '#999',
       fontSize: 12,
     },
+    rootEntryLeftInnerMetaSubjectText: {
+      paddingTop: 1,
+    },
     rootEntryRightInner: {
       flex: 1,
       flexDirection: 'column',

@@ -66,7 +66,11 @@ class EntryItem extends React.Component {
               <Text style={styles(this.props.isNightMode).rootEntryLeftInnerMetaText}>{ '-' }</Text>
               <Text style={styles(this.props.isNightMode).rootEntryLeftInnerMetaText}>{ date }</Text>
               <Text style={styles(this.props.isNightMode).rootEntryLeftInnerMetaText}>{ '-' }</Text>
-              <Text style={styles(this.props.isNightMode).rootEntryLeftInnerMetaText}>{ subject }</Text>
+              <Text style={[
+                styles(this.props.isNightMode).rootEntryLeftInnerMetaText,
+                styles(this.props.isNightMode).rootEntryLeftInnerMetaSubjectText,
+              ]}
+              >{ subject }</Text>
             </View>
           </View>
         </View>
