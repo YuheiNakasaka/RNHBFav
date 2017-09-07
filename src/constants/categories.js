@@ -1,4 +1,5 @@
 export const entryCategories = [
+  ['all', '総合'],
   ['social', '世の中'],
   ['economics', '政治と経済'],
   ['life', '暮らし'],

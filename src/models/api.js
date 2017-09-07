@@ -148,7 +148,11 @@ export function fetchHotEntry(category) {
     },
   };
 
-  const url = `http://b.hatena.ne.jp/hotentry/${category}.rss`;
+  // hotentryの場合のみurl違う
+  let url = `http://b.hatena.ne.jp/hotentry/${category}.rss`;
+  if (category === 'all') {
+    url = 'http://b.hatena.ne.jp/hotentry.rss';
+  }
 
   return fetch(url, myInit).then(response => entryItems(response._bodyText).then(res => res)).catch((err) => {
     console.log(err.message);
@@ -165,7 +169,11 @@ export function fetchNewEntry(category) {
     },
   };
 
-  const url = `http://b.hatena.ne.jp/entrylist/${category}.rss`;
+  // 新着の場合のみurl違う
+  let url = `http://b.hatena.ne.jp/entrylist/${category}.rss`;
+  if (category === 'all') {
+    url = 'http://b.hatena.ne.jp/entrylist.rss';
+  }
 
   return fetch(url, myInit).then(response => entryItems(response._bodyText).then(res => res)).catch((err) => {
     console.log(err.message);
