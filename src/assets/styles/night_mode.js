@@ -205,6 +205,10 @@ export const nightModeStyle = {
   },
 
   // entry
+  wkWebview: {
+    flex: 1,
+    backgroundColor: baseColor,
+  },
   footerBackIcon: {
     fontSize: 30,
     color: textColor,

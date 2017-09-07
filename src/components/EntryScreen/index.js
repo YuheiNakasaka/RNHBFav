@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, Text, StatusBar } from 'react-native';
+import { Linking, Text, View, StatusBar } from 'react-native';
 import {
   Container,
   Header,
@@ -80,7 +80,7 @@ class Entry extends Component {
 
   webviewComponent() {
     const { link } = this.state.item;
-    if (link === undefined || link === null) return null;
+    if (link === undefined || link === null) return <View style={styles(this.props.isNightMode).wkWebview} />;
     return (
       <WKWebView
         ref={(ref) => { this.state.webview = ref; }}
@@ -107,6 +107,7 @@ class Entry extends Component {
           this.currentUrl = event.url;
           this.setState({ canGoBack: event.canGoBack });
         }}
+        style={styles(this.props.isNightMode).wkWebview}
       />
     );
   }

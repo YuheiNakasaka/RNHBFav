@@ -26,6 +26,10 @@ export function styles(type = false) {
     content: {
       backgroundColor: '#fff',
     },
+    wkWebview: {
+      flex: 1,
+      backgroundColor: '#fff',
+    },
     footer: {
       height: 40,
     },
